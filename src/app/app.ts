@@ -1,5 +1,6 @@
+import morgan from 'morgan';
 import express from 'express';
-import logger from '../utils/logger';
+import { logger, stream } from '../utils/logger';
 import IRoute from '../interfaces/route.interface';
 import { PORT, ENVIRONMENT, SESSION_SECRET } from '../utils/secrets';
 
@@ -16,7 +17,7 @@ export default class App {
         this._app = express();
 
         // this.initializeDatabaseConnection();
-        // this.initializeMiddleware();
+        this.initializeMiddleware();
         this.initializeRoutes(routes);
         // this.initializeErrorHandling();
     }
@@ -39,7 +40,10 @@ export default class App {
     //   // TODO
     // }
 
-    // private initializeMiddleware() {}
+    private initializeMiddleware() {
+        logger.info('Initializing Middleware ...');
+        this._app.use(morgan('tiny', { stream }));
+    }
 
     private initializeRoutes(routes: IRoute[]) {
         routes.forEach((route: IRoute) => {
