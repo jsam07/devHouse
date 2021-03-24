@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>devHouse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-2.1.1.min.js"
+    ></script>
+  </head>
+  <body class="bg-grey-light font-sans">
+    <div
+      class="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal"
+    >
+      <div class="w-full bg-white mb-4">    
+         <header class="flex-shrink-0 border-b" x-data="setup()">
+          <div class="flex items-center justify-between p-2">
+            <!-- Navbar left -->
+            <div class="flex items-center space-x-3">
+              <span class="p-2 text-xl font-semibold tracking-wider uppercase">devHouse</span>
+            </div>
+
+            <!-- Mobile search box -->
+            <div
+              x-show.transition="isSearchBoxOpen"
+              class="fixed inset-0 z-10 bg-black bg-opacity-20"
+              style="backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)"
+            >
+              <div
+                @click.away="isSearchBoxOpen = false"
+                class="absolute inset-x-0 flex items-center justify-between p-2 bg-white shadow-md"
+              >
+                <div class="flex items-center flex-1 px-2 space-x-2">
+                  <!-- search icon -->
+                  <span>
+                    <svg
+                      class="w-6 h-6 text-gray-500"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    class="w-full px-4 py-3 text-gray-600 rounded-md focus:bg-gray-100 focus:outline-none"
+                  />
+                </div>
+                <!-- close button -->
+                <button @click="isSearchBoxOpen = false" class="flex-shrink-0 p-4 rounded-md">
+                  <svg
+                    class="w-4 h-4 text-gray-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Desktop search box -->
+            <div class="items-center hidden px-2 space-x-2 md:flex-1 md:flex md:mr-auto md:ml-5">
+              <!-- search icon -->
+              <span>
+                <svg
+                  class="w-5 h-5 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </span>
+              <form action="/search">
+                <input
+                  type="text"
+                  name="query"
+                  placeholder="Search"
+                  class="px-4 py-3 rounded-md hover:bg-gray-100 lg:max-w-sm md:py-2 md:flex-1 focus:outline-none md:focus:bg-gray-100 md:focus:shadow md:focus:border"
+                />
+                <button hidden type="submit"></button>
+              </form>
+            </div>
+
+            <!-- Navbar right -->
+            <div class="relative flex items-center space-x-3">
+              <!-- Search button -->
+              <button
+                @click="isSearchBoxOpen = true"
+                class="p-2 bg-gray-100 rounded-full md:hidden focus:outline-none focus:ring hover:bg-gray-200"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </button>
+
+              <div class="items-center hidden space-x-3 md:flex">
+                <!-- Notification Button -->
+                <div class="relative" x-data="{ isOpen: false }">
+                  <!-- red dot -->
+                  <div class="absolute right-0 p-1 bg-red-400 rounded-full animate-ping"></div>
+                  <div class="absolute right-0 p-1 bg-red-400 border rounded-full"></div>
+                  <button
+                    @click="isOpen = !isOpen"
+                    class="p-2 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none focus:ring"
+                  >
+                    <svg
+                      class="w-6 h-6 text-gray-500"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                      />
+                    </svg>
+                  </button>
+
+                  <!-- Dropdown card -->
+                  <div
+                    @click.away="isOpen = false"
+                    x-show.transition.opacity="isOpen"
+                    class="absolute w-48 max-w-md mt-3 transform bg-white rounded-md shadow-lg -translate-x-3/4 min-w-max"
+                  >
+                    <div class="p-4 font-medium border-b">
+                      <span class="text-gray-800">Notification</span>
+                    </div>
+                    <ul class="flex flex-col p-2 my-2 space-y-1">
+                      <li>
+                        <a href="#" class="block px-2 py-1 transition rounded-md hover:bg-gray-100">Link</a>
+                      </li>
+                      <li>
+                        <a href="#" class="block px-2 py-1 transition rounded-md hover:bg-gray-100">Another Link</a>
+                      </li>
+                    </ul>
+                    <div class="flex items-center justify-center p-4 text-blue-700 underline border-t">
+                      <a href="#">See All</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- avatar button -->
+              <div class="relative" x-data="{ isOpen: false }">
+                <button @click="isOpen = !isOpen" class="p-1 bg-gray-200 rounded-full focus:outline-none focus:ring">
+                  <img
+                    class="object-cover w-8 h-8 rounded-full"
+                    src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif"
+                    alt="john doe"
+                  />
+                </button>
+                <!-- green dot -->
+                <div class="absolute right-0 p-1 bg-green-400 rounded-full bottom-3 animate-ping"></div>
+                <div class="absolute right-0 p-1 bg-green-400 border border-white rounded-full bottom-3"></div>
+
+                <!-- Dropdown card -->
+                <div
+                  @click.away="isOpen = false"
+                  x-show.transition.opacity="isOpen"
+                  class="z-50 absolute mt-3 transform -translate-x-full bg-white rounded-md shadow-lg min-w-max"
+                >
+                  <div class="flex flex-col p-4 space-y-1 font-medium border-b">
+                    <span class="text-gray-800">John Doe</span>
+                    <span class="text-sm text-gray-400">john.doe@gmail.com</span>
+                  </div>
+                  <ul class="flex flex-col p-2 my-2 space-y-1">
+                    <li>
+                      <a href="#" class="block px-2 py-1 transition no-underline rounded-md hover:bg-gray-100">Settings</a>
+                    </li>
+                    <li>
+                      <a href="/auth/logout" class="block px-2 py-1 transition no-underline rounded-md hover:bg-gray-100">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <div class="p-5">
+          <div class="bg-white  mx-auto w-full sm:w-11/12 md:w-8/12 lg:w-6/12 rounded">
+            <div class="flex items-center justify-start gap-3 py-2 mx-3 border-b">
+              <img
+                class="w-12 h-12 rounded-full"
+                src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif"
+              />
+              <form class="w-full" action="/posts" method="POST">
+                <input
+                  class="w-9/12 bg-gray-200 rounded-full px-3 py-2"
+                  name="postText"
+                  placeholder="What's on your mind, Ross?"
+                />
+                <input class="transition duration-500 ease-in-out hover:bg-red-600 transform w-2/12 rounded-full p-2 bg-gray-800 cursor-pointer text-gray-200" type="submit" value="Post">
+              </form>
+            </div>
+            <div></div>
+          </div>
+          
+        <!-- Post begins -->
+        <% posts.forEach(post => { %>
+        <div class="flex bg-gray-100 mb-4 rounded-lg">
+          <div class="w-1/8 text-right pl-3 pt-3">
+            <div>
+              <a href="#"
+                ><img
+                  src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif"
+                  alt="avatar"
+                  class="rounded-full h-12 w-12 mr-2"
+              /></a>
+            </div>
+          </div>
+
+          <div class="w-7/8 p-3 pl-0">
+            <!-- <div class="text-xs text-grey-dark">Reposted</div> -->
+            <div class="flex justify-between">
+              <div>
+                <span class="font-bold"
+                  ><a href="#" class="text-black"
+                    ><%= post.userId %></a
+                  ></span
+                >
+                <span class="text-grey-dark">&middot;</span>
+                <span class="text-grey-dark"><%= post.createdAt %></span>
+                <span class="inline-block">
+                  <form action="/delete" method="post">
+                    <input type="hidden" value="<%= post.postId %>" name="postToDelete" />
+                    <button type="submit"><i class="transition duration-500 ease-in-out hover:bg-gray-300 transform p-5 rounded-full fa fa-trash"></i></button>
+                  </form>
+                  
+                </span>
+              </div>
+
+            </div>
+            <div>
+              <div class="mb-4">
+                <p class="mb-6"><%= post.message %></p>
+              </div>
+              <div class="pb-2">
+                <span class="mr-8"
+                  ><a
+                    href="/posts/<%= post.postId %>"
+                    class="text-grey-dark hover:no-underline hover:text-blue-light"
+                    ><i class="fa fa-comment fa-lg mr-2"></i> <%=
+                    post.commentList.length %></a
+                  ></span
+                >
+                <span class="mr-8"
+                  ><a
+                    href="#"
+                    class="text-grey-dark hover:no-underline hover:text-green"
+                    ><i class="fa fa-retweet fa-lg mr-2"></i> <%=
+                    post.reposts %></a
+                  ></span
+                >
+                <span class="mr-8"
+                  ><a
+                    href="#"
+                    class="text-grey-dark hover:no-underline hover:text-red"
+                    ><i class="fa fa-heart fa-lg mr-2"></i> <%= post.likes
+                    %></a
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+        <!-- Post ends -->
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+    <script>
+      const setup = () => {
+        return {
+          loading: true,
+          isSidebarOpen: false,
+          toggleSidbarMenu() {
+            this.isSidebarOpen = !this.isSidebarOpen
+          },
+          isSettingsPanelOpen: false,
+          isSearchBoxOpen: false,
+        }
+      }
+    </script>
+  </body>
+</html>
