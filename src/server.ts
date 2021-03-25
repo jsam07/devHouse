@@ -1,8 +1,7 @@
 import App from './app/app';
-import IRoute from './interfaces/route.interface_';
-import AuthController from './controllers/Auth.controller';
+import HomeRoute from './routes/Home.route';
+import AuthenticationRoute from './routes/Authentication.route';
 
-
-const app: App = new App([]);
+const app: App = new App([new HomeRoute(), new AuthenticationRoute()]);
 
 app.listen();

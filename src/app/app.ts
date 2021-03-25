@@ -49,17 +49,17 @@ export default class App {
         logger.info('🚀 Finished Initializing All Middleware.');
     }
 
-    private initializeErrorHandling(): void {
-        logger.info('🔨 Initializing Error Handling Middleware ...');
-        this._app.use(errorMiddleware);
-        logger.info('🚀 Finished Initializing Error Handling Middleware.');
-    }
-
     private initializeRoutes(routes: IRoute[]) {
         logger.info('🔨 Initializing Routes ...');
         routes.forEach((route: IRoute) => {
             this._app.use('/', route.router);
         });
         logger.info('🚀 Finished Initializing Routes.');
+    }
+
+    private initializeErrorHandling(): void {
+        logger.info('🔨 Initializing Error Handling Middleware ...');
+        this._app.use(errorMiddleware);
+        logger.info('🚀 Finished Initializing Error Handling Middleware.');
     }
 }

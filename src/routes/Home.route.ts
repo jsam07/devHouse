@@ -10,13 +10,14 @@ export default class HomeRoute implements IRoute {
     private homeController: HomeController;
 
     constructor() {
-        this.path = '';
+        this.path = '/';
         this.router = Router();
+        this.homeController = new HomeController();
         this.initializeRoutes();
     }
 
     private initializeRoutes() {
         // TODO: Add middleware to re-route to signup if user if not logged in
-        this.router.get('/', this.homeController.home);
+        this.router.get(`${this.path}`, this.homeController.home);
     }
 }

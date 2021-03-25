@@ -1,5 +1,5 @@
-import ITag from './tag.interface_';
-import IEntity from './entities.interface_';
+import ITag from './tag.interface';
+import IEntity from './entities.interface';
 import IComment from './comment.interface';
 
 export default interface Message {

@@ -1,5 +1,5 @@
-import IPost from './post.interface_';
-import IPublicMetrics from './publicMetric.interface_';
+import IPost from './post.interface';
+import IPublicMetrics from './publicMetric.interface';
 
 export default interface IUser {
     id: string;

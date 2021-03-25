@@ -1,5 +1,5 @@
-import IMessage from './message.interface_';
-import ILocation from './location.interface_';
+import IMessage from './message.interface';
+import ILocation from './location.interface';
 
 export default interface Post extends IMessage {
     geo?: ILocation;

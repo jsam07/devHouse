@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this,@typescript-eslint/no-unused-vars */
 import IUser from '../interfaces/user.interface';
 import Database from '../interfaces/database.interface';
 import database from '../database/database_1615571003434.json';

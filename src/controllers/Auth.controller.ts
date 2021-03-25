@@ -9,7 +9,22 @@ export default class AuthenticationController {
         this.service = new AuthenticationService();
     }
 
-    public async signUp(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public handleGetRegister(req: Request, res: Response, next: NextFunction): void {
+        // TODO: Add relevant middleware
+        res.render('register');
+    }
+
+    public handleGetLogin(req: Request, res: Response, next: NextFunction): void {
+        // TODO: Add relevant middleware
+        res.render('login');
+    }
+
+    public handleGetLogout(req: Request, res: Response, next: NextFunction): void {
+        // TODO: Add relevant middleware
+        res.render('login');
+    }
+
+    public async handlePostRegister(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             res.status(200).send('Got to signup POST route');
         } catch (error) {
@@ -17,7 +32,7 @@ export default class AuthenticationController {
         }
     }
 
-    public async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async handlePostLogin(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             res.status(200).send('Got to login POST route');
         } catch (error) {
@@ -25,7 +40,7 @@ export default class AuthenticationController {
         }
     }
 
-    public async logout(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async handlePostLogout(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             res.status(200).send('Got to logout POST route');
         } catch (error) {

@@ -1,5 +1,5 @@
-import IUser from './user.interface_';
-import IDatabase from './database.interface_';
+import IUser from './user.interface';
+import IDatabase from './database.interface';
 
 export default interface AuthService {
     _db: IDatabase;
