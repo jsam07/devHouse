@@ -3,10 +3,10 @@ import { Request, Response, NextFunction } from 'express';
 import AuthenticationService from '../services/Auth.service';
 
 export default class AuthenticationController {
-    private service: AuthenticationService;
+    private authService: AuthenticationService;
 
     constructor() {
-        this.service = new AuthenticationService();
+        this.authService = new AuthenticationService();
     }
 
     public handleGetRegister(req: Request, res: Response, next: NextFunction): void {

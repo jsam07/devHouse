@@ -7,22 +7,23 @@ export default class AuthenticationRoute implements IRoute {
 
     public router: Router;
 
-    private controller: AuthenticationController;
+    private authController: AuthenticationController;
 
     constructor() {
         this.path = '/auth';
         this.router = Router();
-        this.controller = new AuthenticationController();
+        this.authController = new AuthenticationController();
         this.initializeRoutes();
     }
 
     private initializeRoutes() {
-        this.router.get(this.getPath('register'), this.controller.handleGetRegister);
-        this.router.get(this.getPath('login'), this.controller.handleGetLogin);
-        this.router.get(this.getPath('logout'), this.controller.handleGetLogout);
-        this.router.post(this.getPath('register'), this.controller.handlePostRegister);
-        this.router.post(this.getPath('login'), this.controller.handlePostLogin);
-        this.router.post(this.getPath('logout'), this.controller.handlePostLogout);
+        // TODO: Add middleware
+        this.router.get(this.getPath('register'), this.authController.handleGetRegister);
+        this.router.get(this.getPath('login'), this.authController.handleGetLogin);
+        this.router.get(this.getPath('logout'), this.authController.handleGetLogout);
+        this.router.post(this.getPath('register'), this.authController.handlePostRegister);
+        this.router.post(this.getPath('login'), this.authController.handlePostLogin);
+        this.router.post(this.getPath('logout'), this.authController.handlePostLogout);
     }
 
     private getPath(s: string): string {
