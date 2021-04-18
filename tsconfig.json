@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["dom", "dom.iterable", "ESNext"],
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -18,7 +18,8 @@
     "strict": false,
     "noImplicitAny": false,
     "strictPropertyInitialization": false,
-    "baseUrl": "./src"
+    "baseUrl": ".",
+    "resolveJsonModule": true
   },
   "include": ["./src/**/*", ".env", "./scripts.ts"],
   "exclude": ["node_modules"]
