@@ -3,7 +3,7 @@ import WinstonDaily from 'winston-daily-rotate-file';
 import winston, { format, LoggerOptions } from 'winston';
 
 import IOHandler from './IOhandler';
-import loggerConfig from '../config/loggerConfig';
+import loggerConfig from '../config/Logger.config';
 
 const { combine, timestamp, printf, prettyPrint, colorize, errors } = format;
 

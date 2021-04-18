@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Post {
+  id              Int       @id @default(autoincrement()) 
+  title           String?   @db.VarChar(255)
+  content         String?   @db.Text 
+
+  author          User      @relation(fields: [authorId], references: [id])
+  authorId        Int
+
+  parentPostId    Int?
+  parentPost      Post?     @relation("PostRepost", fields: [parentPostId], references: [id])
+  reposts         Post[]    @relation("PostRepost")      
+
+  hashTags        HashTag[]
+  comments        Comment[] 
+
+  postLikedFrom User[]    @relation(name: "likedPosts")
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt   
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  email           String    @db.VarChar(255) @unique
+  provider        Int       @default(1)
+
+  imageUrl        String?   @db.Text
+  userName        String?   @db.VarChar(255)
+  lastName        String?   @db.VarChar(255)
+  firstName       String?   @db.VarChar(255)
+  hashedPassword  String?   @db.VarChar(255)
+  
+  posts           Post[]    
+  likedPosts      Post[]    @relation(name: "likedPosts")
+  friends         User[]    @relation("UserFollows", references: [id])
+  followers       User[]    @relation("UserFollows", references: [id])
+
+  comments        Comment[]
+  commentLikes    Comment[] @relation(name: "commentLikes")
+
+}
+
+model Comment {
+  id                Int       @id @default(autoincrement())
+  content           String    @db.Text
+
+  author            User      @relation(fields: [authorId], references: [id])
+  authorId          Int
+  likesFrom         User[]    @relation(name: "commentLikes")
+
+  post              Post      @relation(fields: [postId], references: [id]) 
+  postId            Int
+
+  parentCommentId   Int?
+  parentComment     Comment?  @relation("ReplyComments", fields: [parentCommentId], references: [id])
+  replies           Comment[] @relation("ReplyComments")   
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime? @updatedAt 
+}
+
+model HashTag {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(255) @unique
+  posts Post[]
+}

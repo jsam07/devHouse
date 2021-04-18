@@ -2,20 +2,22 @@ import IPost from './post.interface';
 import IPublicMetrics from './publicMetric.interface';
 
 export default interface IUser {
-    id: string;
+    id?: string;
     url?: string;
-    lastName: string;
-    firstName: string;
+    lastName?: string;
+    firstName?: string;
 
     email: string;
-    createdAt: number;
-    username: string;
-    private: boolean;
+    password?: string;
+    type?: number;
+    createdAt?: number;
+    username?: string;
+    private?: boolean;
     location?: string;
-    verified: boolean;
+    verified?: boolean;
     description?: string;
-    passwordSalt: string;
-    passwordHash: string;
+    passwordSalt?: string;
+    passwordHash?: string;
     profileImageURL?: string;
 
     posts?: IPost[];

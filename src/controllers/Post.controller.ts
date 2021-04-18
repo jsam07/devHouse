@@ -9,43 +9,43 @@ export default class PostController {
         this.postService = new PostService();
     }
 
-    public async handleGetAllPosts(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public handleGetAllPosts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             res.status(200).send('Got to getAllPosts GET route');
         } catch (error) {
             next(error);
         }
-    }
+    };
 
-    public async handleGetPostByID(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public handleGetPostByID = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             res.status(200).send('Got to GetPostByID GET route');
         } catch (error) {
             next(error);
         }
-    }
+    };
 
-    public async handleDeletePost(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public handleDeletePost = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            res.status(200).send('Got to DeletePost GET route');
+            res.status(200).send('Got to GetPostByID GET route');
         } catch (error) {
             next(error);
         }
-    }
+    };
 
-    public async handleCreateComment(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public handleCreateComment = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             res.status(200).send('Got createComment POST route');
         } catch (error) {
             next(error);
         }
-    }
+    };
 
-    public async handleCreatePost(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public handleCreatePost = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             res.status(200).send('Got createPost POST route');
         } catch (error) {
             next(error);
         }
-    }
+    };
 }

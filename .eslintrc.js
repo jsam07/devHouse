@@ -10,7 +10,8 @@ module.exports = {
     rules: {
         'no-console': 'off',
         'no-plusplus': 'off',
-        'no-shadow': [2, { allow: ['passport'] }],
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
         'class-methods-use-this': ['error', { exceptMethods: ['length'] }],
         'prettier/prettier': ['error', { endOfLine: 'auto' }],
         'import/extensions': [

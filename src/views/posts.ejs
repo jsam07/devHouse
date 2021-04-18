@@ -7,17 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
+      type="text/css"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link
       rel="stylesheet"
+      type="text/css"
       href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
     />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="/css/styles.css"
+    />
+
     <script
-      type="text/javascript"
-      src="https://code.jquery.com/jquery-2.1.1.min.js"
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+    </script>
+    <script
+            type="text/javascript"
+            src="https://code.jquery.com/jquery-2.1.1.min.js"
     ></script>
   </head>
   <body class="bg-grey-light font-sans">
@@ -33,10 +44,9 @@
             </div>
 
             <!-- Mobile search box -->
-            <div
+            <div id="mobile-search-box"
               x-show.transition="isSearchBoxOpen"
               class="fixed inset-0 z-10 bg-black bg-opacity-20"
-              style="backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)"
             >
               <div
                 @click.away="isSearchBoxOpen = false"
@@ -312,19 +322,7 @@
         <!-- Post ends -->
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
-    <script>
-      const setup = () => {
-        return {
-          loading: true,
-          isSidebarOpen: false,
-          toggleSidbarMenu() {
-            this.isSidebarOpen = !this.isSidebarOpen
-          },
-          isSettingsPanelOpen: false,
-          isSearchBoxOpen: false,
-        }
-      }
-    </script>
+      <script type="text/javascript" src="/js/posts.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   </body>
 </html>
