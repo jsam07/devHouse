@@ -9,7 +9,7 @@ export const CSPDirectives = {
         defaultSrc: ["'none'"],
         scriptSrc: ["'self'", 'cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'code.jquery.com', "'unsafe-eval'"],
         styleSrc: ["'self'", 'unpkg.com', 'cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'code.jquery.com'],
-        imgSrc: ["'self'", 'source.unsplash.com', 'images.unsplash.com', 'user-images.githubusercontent.com'],
+        imgSrc: ["'self'", 'source.unsplash.com', 'images.unsplash.com', 'user-images.githubusercontent.com', 'tailwindui.com'],
         objectSrc: ["'none'"],
         fontSrc: ["'self'", 'cdnjs.cloudflare.com'],
     },

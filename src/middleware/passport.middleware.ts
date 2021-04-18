@@ -1,10 +1,13 @@
 import { Application } from 'express';
 import passport from 'passport';
 import PassportConfig from '../config/Passport/Passport.config';
-import localStrategy from '../config/Passport/Strategies/Local.strategy';
-import jwtStrategy from '../config/Passport/Strategies/Jwt.strategy';
 
-const passportConfig = new PassportConfig([localStrategy, jwtStrategy]);
+import jwtStrategy from '../config/Passport/Strategies/Jwt.strategy';
+import localStrategy from '../config/Passport/Strategies/Local.strategy';
+import passportGitHubStrategy from '../config/Passport/Strategies/GitHub.strategy';
+
+// No need to actually pass the instance of Passport since passport returns a singleton
+const passportConfig = new PassportConfig([localStrategy, jwtStrategy, passportGitHubStrategy]);
 const passportMiddleware = (app: Application): void => {
     app.use(passport.initialize());
 };

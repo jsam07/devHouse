@@ -9,92 +9,160 @@
     <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet" />
   </head>
   <body class="bg-white font-family-karla h-screen">
-    <div class="w-full flex flex-wrap">
-      <!-- Login Section -->
-      <div class="w-full md:w-1/2 flex flex-col">
-        <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-24">
-          <a href="#" class="bg-black text-white font-bold text-xl p-4">devHouse</a>
-        </div>
+<!--    <div class="w-full flex flex-wrap">-->
+<!--      &lt;!&ndash; Login Section &ndash;&gt;-->
+<!--      <div class="w-full md:w-1/2 flex flex-col">-->
+<!--        <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-24">-->
+<!--          <a href="#" class="bg-black text-white font-bold text-xl p-4">devHouse</a>-->
+<!--        </div>-->
 
-        <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
-          <p class="text-center text-3xl">Sign Up.</p>
-          <form class="flex flex-col pt-3 md:pt-8" method="post" action="/auth/register">
-            <div class="flex flex-col pt-4">
-              <label for="userName" class="text-lg">Username</label>
-              <input
-                      type="text"
-                      id="userName"
-                      name="userName"
-                      placeholder="Username"
-                      required
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
-            <div class="flex flex-col pt-4">
-              <label for="firstName" class="text-lg">First Name</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                placeholder="First Name"
-                required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
-            <div class="flex flex-col pt-4">
-              <label for="lastName" class="text-lg">Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                placeholder="Last Name"
-                required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
-            <div class="flex flex-col pt-4">
-              <label for="email" class="text-lg">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="your@email.com"
-                required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
+<!--        <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">-->
+<!--          <p class="text-center text-3xl">Sign Up.</p>-->
+<!--          <form class="flex flex-col pt-3 md:pt-8" method="post" action="/auth/register">-->
+<!--            <div class="flex flex-col pt-4">-->
+<!--              <label for="userName" class="text-lg">Username</label>-->
+<!--              <input-->
+<!--                      type="text"-->
+<!--                      id="userName"-->
+<!--                      name="userName"-->
+<!--                      placeholder="Username"-->
+<!--                      required-->
+<!--                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"-->
+<!--              />-->
+<!--            </div>-->
+<!--            <div class="flex flex-col pt-4">-->
+<!--              <label for="firstName" class="text-lg">First Name</label>-->
+<!--              <input-->
+<!--                type="text"-->
+<!--                id="firstName"-->
+<!--                name="firstName"-->
+<!--                placeholder="First Name"-->
+<!--                required-->
+<!--                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"-->
+<!--              />-->
+<!--            </div>-->
+<!--            <div class="flex flex-col pt-4">-->
+<!--              <label for="lastName" class="text-lg">Last Name</label>-->
+<!--              <input-->
+<!--                type="text"-->
+<!--                id="lastName"-->
+<!--                name="lastName"-->
+<!--                placeholder="Last Name"-->
+<!--                required-->
+<!--                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"-->
+<!--              />-->
+<!--            </div>-->
+<!--            <div class="flex flex-col pt-4">-->
+<!--              <label for="email" class="text-lg">Email</label>-->
+<!--              <input-->
+<!--                type="email"-->
+<!--                id="email"-->
+<!--                name="email"-->
+<!--                placeholder="your@email.com"-->
+<!--                required-->
+<!--                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"-->
+<!--              />-->
+<!--            </div>-->
 
-            <div class="flex flex-col pt-4">
-              <label for="password" class="text-lg">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
+<!--            <div class="flex flex-col pt-4">-->
+<!--              <label for="password" class="text-lg">Password</label>-->
+<!--              <input-->
+<!--                type="password"-->
+<!--                id="password"-->
+<!--                name="password"-->
+<!--                placeholder="Password"-->
+<!--                required-->
+<!--                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"-->
+<!--              />-->
+<!--            </div>-->
 
-            <input
-              type="submit"
-              value="Register"
-              class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"
-            />
-          </form>
-          <div class="text-center pt-12 pb-12">
-            <p>
-              Already have an account?
-              <a href="/auth/login" class="underline font-semibold">Login here.</a>
-            </p>
-          </div>
-        </div>
+<!--            <input-->
+<!--              type="submit"-->
+<!--              value="Register"-->
+<!--              class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"-->
+<!--            />-->
+<!--          </form>-->
+<!--          <div class="text-center pt-12 pb-12">-->
+<!--            <p>-->
+<!--              Already have an account?-->
+<!--              <a href="/auth/login" class="underline font-semibold">Login here.</a>-->
+<!--            </p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Image Section &ndash;&gt;-->
+<!--      <div class="w-1/2 shadow-2xl">-->
+<!--        <img class="object-cover w-full h-screen hidden md:block" src="https://source.unsplash.com/IXUM4cJynP0" />-->
+<!--      </div>-->
+<!--    </div>-->
+<div class="min-h-screen bg-white flex">
+  <div class="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+    <div class="mx-auto w-full max-w-sm lg:w-96">
+      <div>
+        <img class="h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
+        <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+          Sign Up
+        </h2>
       </div>
 
-      <!-- Image Section -->
-      <div class="w-1/2 shadow-2xl">
-        <img class="object-cover w-full h-screen hidden md:block" src="https://source.unsplash.com/IXUM4cJynP0" />
+      <div class="mt-8">
+        <div>
+          <%if (error) { %>
+            <div class="text-center pt-2">
+              <div class="text-red-500"><%= error.messaage %></div>
+            </div>
+          <% } %>
+        </div>
+
+        <div class="mt-6">
+          <form action="/auth/register" method="POST" class="space-y-6">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">
+                User Name
+              </label>
+              <div class="mt-1">
+                <input id="username" name="username" type="text" autocomplete="username" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              </div>
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">
+                Email Address
+              </label>
+              <div class="mt-1">
+                <input id="email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label for="password" class="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <div class="mt-1">
+                <input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              </div>
+            </div>
+
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white font-medium text-indigo-600 hover:text-indigo-500">
+                Already have an account?
+              </span>
+              <a href="/auth/login" class="underline font-semibold">Login Here.</a>
+            </div>
+            <div>
+              <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"  onclick="window.location.href=`github`>
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
+  </div>
+  <div class="hidden lg:block relative w-0 flex-1">
+    <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1505904267569-f02eaeb45a4c?ixlib=rb-1.2.1&ixqx=PVPa7H0WRW&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80" alt="">
+  </div>
+</div>
   </body>
 </html>

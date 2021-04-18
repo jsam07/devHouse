@@ -48,20 +48,18 @@ export default class UserService implements IUserService {
             try {
                 await database.user.create({
                     data: {
-                        firstName: 'Alice',
-                        email: 'alice@prisma.io',
-                        posts: {
-                            create: { title: 'Hello World' },
-                        },
+                        userName: username,
+                        email,
+                        hashedPassword: password,
                     },
                 });
 
-                const allUsers = await database.user.findMany({
-                    include: {
-                        posts: true,
-                    },
-                });
-                logger.debug(JSON.stringify(allUsers));
+                // const allUsers = await database.user.findMany({
+                //     include: {
+                //         posts: true,
+                //     },
+                // });
+                // logger.debug(JSON.stringify(allUsers));
             } catch (error) {
                 logger.error(error);
             }

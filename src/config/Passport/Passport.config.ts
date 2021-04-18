@@ -1,6 +1,7 @@
 import passport from 'passport';
 
 import PassportStrategy from '../../interfaces/passport.strategy.interface';
+import { logger } from '../../utils/logger';
 
 export default class PassportConfig {
     public readonly strategies: PassportStrategy[];
@@ -11,7 +12,7 @@ export default class PassportConfig {
     }
 
     private addStrategies(): void {
-        this.strategies.forEach(pStrategy => {
+        this.strategies.forEach((pStrategy: PassportStrategy) => {
             passport.use(pStrategy.name, pStrategy.strategy);
         });
     }

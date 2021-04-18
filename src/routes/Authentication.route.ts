@@ -1,5 +1,6 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
+import passport from 'passport';
 import IRoute from '../interfaces/route.interface';
 import AuthenticationController from '../controllers/Auth.controller';
 import UserController from '../controllers/User.controller';
@@ -24,6 +25,17 @@ export default class AuthenticationRoute implements IRoute {
 
     private initializeRoutes() {
         // GETs
+        // this.router.get(this.getPath('github'));
+
+        // this.router.get(
+        //     this.getPath('github/callback'),
+        //     passport.authenticate('github', { session: false, failureRedirect: '/login' }),
+        //     (req: Request, res: Response) => {
+        //         res.redirect('/');
+        //     },
+        // );
+        this.router.get(this.getPath('github'), this.authController.handleGetGitHubLogin);
+        this.router.get(this.getPath('github/callback'), this.authController.handleGetGitHubCallback);
         this.router.get(this.getPath('register'), this.authController.handleGetRegister);
         this.router.get(this.getPath('login'), this.authController.handleGetLogin);
         this.router.get(this.getPath('logout'), this.authController.handleGetLogout);
