@@ -1,13 +1,15 @@
-import morgan from 'morgan';
-import express from 'express';
-import { logger, stream } from '../utils/logger';
+import express, { Application } from 'express';
+import { logger } from '../utils/logger';
 import IRoute from '../interfaces/route.interface';
-import { PORT, ENVIRONMENT, SESSION_SECRET } from '../utils/secrets';
+import { PORT, ENVIRONMENT } from '../utils/secrets';
+import errorMiddleware from '../middleware/error.middleware';
+import expressMiddleware from '../middleware/express.middleware';
+import passportMiddleware from '../middleware/passport.middleware';
 
 export default class App {
     private readonly _env: string;
 
-    private _app: express.Application;
+    private readonly _app: Application;
 
     private readonly _port: string | number;
 
@@ -19,7 +21,7 @@ export default class App {
         // this.initializeDatabaseConnection();
         this.initializeMiddleware();
         this.initializeRoutes(routes);
-        // this.initializeErrorHandling();
+        this.initializeErrorHandling();
     }
 
     public get env(): string {
@@ -30,9 +32,9 @@ export default class App {
         return this._port;
     }
 
-    public start(): void {
+    public listen(): void {
         this._app.listen(this.port, () => {
-            logger.info(`Application Started. Listening on port: ${this._port}`);
+            logger.info(`🚀 Application Started; Listening on port: ${this._port}`);
         });
     }
 
@@ -40,16 +42,24 @@ export default class App {
     //   // TODO
     // }
 
-    private initializeMiddleware() {
-        logger.info('Initializing Middleware ...');
-        this._app.use(morgan('tiny', { stream }));
+    private initializeMiddleware(): void {
+        logger.info('🔨 Initializing Middleware ...');
+        expressMiddleware(this._app);
+        passportMiddleware(this._app);
+        logger.info('🚀 Finished Initializing All Middleware.');
     }
 
     private initializeRoutes(routes: IRoute[]) {
+        logger.info('🔨 Initializing Routes ...');
         routes.forEach((route: IRoute) => {
             this._app.use('/', route.router);
         });
+        logger.info('🚀 Finished Initializing Routes.');
     }
 
-    // private initializeErrorHandling() {}
+    private initializeErrorHandling(): void {
+        logger.info('🔨 Initializing Error Handling Middleware ...');
+        this._app.use(errorMiddleware);
+        logger.info('🚀 Finished Initializing Error Handling Middleware.');
+    }
 }

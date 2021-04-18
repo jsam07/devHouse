@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>devHouse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  </head>
+  <body class="bg-grey-light font-sans">
+    <section class="h-screen w-screen bg-gray-200 flex flex-col-reverse sm:flex-row min-h-0 min-w-0 overflow-hidden">
+      <main class="sm:h-full flex-1 flex flex-col min-h-0 min-w-0 overflow-auto">
+        <div id="menu" class="container mx-auto px-4 lg:pt-24 lg:pb-34">
+          <div class="flex flex-wrap text-center justify-center">
+            <div class="w-full lg:w-6/12 px-4">
+              <h2 class="text-4xl font-semibold text-black">Users</h2>
+              <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
+                Here is a list of users that match your search query:
+              </p>
+            </div>
+          </div>
+          <div class="flex flex-wrap mt-12 justify-center">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+              <div class="col-span-2 sm:col-span-1 xl:col-span-1">
+                <img
+                  alt="..."
+                  src="https://sewausa.org/resources/Sewa%20USA%20Images/Projects/Sewa%20Aspire/Volunteer%20list/9.png"
+                  class="h-24 w-24 rounded mx-auto"
+                />
+              </div>
+              <div class="col-span-2 sm:col-span-4 xl:col-span-4">
+                <p>John Doe</p>
+              </div>
+              <div class="col-span-2 sm:col-span-1 xl:col-span-1 italic">
+                <button
+                  class="text-pink-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                  type="button"
+                  style="transition: all 0.15s ease"
+                >
+                  <i class="fa fa-heart mr-2"></i> Following
+                </button>
+              </div>
+
+              <div class="col-span-2 sm:col-span-1 xl:col-span-1">
+                <img
+                  alt="..."
+                  src="https://sewausa.org/resources/Sewa%20USA%20Images/Projects/Sewa%20Aspire/Volunteer%20list/9.png"
+                  class="h-24 w-24 rounded mx-auto"
+                />
+              </div>
+              <div class="col-span-2 sm:col-span-4 xl:col-span-4">
+                <p>John Smith</p>
+              </div>
+              <div class="col-span-2 sm:col-span-1 xl:col-span-1 italic">
+                <button
+                  class="text-pink-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                  type="button"
+                  style="transition: all 0.15s ease"
+                >
+                  <i class="fa fa-heart-o mr-2"></i>Follow
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="menu" class="container mx-auto px-4 lg:pt-24 lg:pb-34">
+          <div class="flex flex-wrap text-center justify-center">
+            <div class="w-full lg:w-6/12 px-4">
+              <h2 class="text-4xl font-semibold text-black">Posts</h2>
+              <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
+                Here is a list of posts that match your search query:
+              </p>
+            </div>
+          </div>
+          <div class="flex flex-wrap mt-12 justify-center">
+            <div class="grid grid-cols-1 sm:grid-cols-6 md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-6 gap-4">
+              <div class="col-span-4 sm:col-span-5 xl:col-span-5">
+                <h3 class="font-semibold text-black">Bill Gates</h3>
+                <p>This is a first example of a post</p>
+              </div>
+              <div class="col-span-2 sm:col-span-1 xl:col-span-1 italic">
+                <button
+                  class="text-pink-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                  type="button"
+                  style="transition: all 0.15s ease"
+                >
+                  <i class="fa fa-arrow-right"></i>
+                </button>
+              </div>
+
+              <div class="col-span-4 sm:col-span-5 xl:col-span-5">
+                <h3 class="font-semibold text-black">Steve Jobs</h3>
+                <p>This is a second example of a post</p>
+              </div>
+              <div class="col-span-2 sm:col-span-1 xl:col-span-1 italic">
+                <button
+                  class="text-pink-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                  type="button"
+                  style="transition: all 0.15s ease"
+                >
+                  <i class="fa fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+  </body>
+</html>

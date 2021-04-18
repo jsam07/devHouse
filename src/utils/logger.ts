@@ -3,7 +3,7 @@ import WinstonDaily from 'winston-daily-rotate-file';
 import winston, { format, LoggerOptions } from 'winston';
 
 import IOHandler from './IOhandler';
-import loggerConfig from '../config/loggerConfig';
+import loggerConfig from '../config/Logger.config';
 
 const { combine, timestamp, printf, prettyPrint, colorize, errors } = format;
 
@@ -72,7 +72,7 @@ logger.add(
 );
 
 const stream = {
-    write: (message: string) => {
+    write: (message: string): void => {
         logger.http(message.substring(0, message.lastIndexOf('\n')));
     },
 };
