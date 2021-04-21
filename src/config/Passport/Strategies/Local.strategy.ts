@@ -22,16 +22,18 @@ const localStrategy: LocalStrategy = new LocalStrategy(
                 return done(null, false, { message: 'User not found' });
             }
 
-            const validate = await UserService.isValidPassword(user, password);
-
-            if (!validate) {
-                return done(null, false, { message: 'Wrong Password' });
-            }
+            // const validate = await UserService.isValidPassword(user, password);
+            //
+            // if (!validate) {
+            //     return done(null, false, { message: 'Wrong Password' });
+            // }
 
             logger.debug('Returning USER');
+            logger.debug('Attaching user to req object from local');
             req.user = {
                 email: user.email,
             };
+            logger.debug(`From local, checking req.user = ${JSON.stringify(req.user)}`);
             return done(null, user, { message: 'Logged in Successfully' });
         } catch (error) {
             return done(error);

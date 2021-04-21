@@ -10,8 +10,8 @@ import PrismaDatabase from '../database/Prisma.database';
 
 const { database } = PrismaDatabase;
 
-export default class UserService implements IUserService {
-    readonly _db: Database;
+export default class UserService {
+    readonly _db: any;
 
     constructor() {
         this._db = databasemock;
@@ -37,8 +37,8 @@ export default class UserService implements IUserService {
         return user.password === password;
     }
 
-    public async addUser(username: string, email: string, password: string): Promise<void> {
-        const user: User = { email, username, password };
+    public async addUser(userName: string, email: string, password: string): Promise<void> {
+        const user: User = { email, userName, password };
         this._db.users.push(user);
         this._db.users.forEach(_user => {
             logger.debug(_user.email);
@@ -48,7 +48,7 @@ export default class UserService implements IUserService {
             try {
                 await database.user.create({
                     data: {
-                        userName: username,
+                        userName,
                         email,
                         hashedPassword: password,
                     },
@@ -76,7 +76,9 @@ export default class UserService implements IUserService {
 
     public async findUserByEmail(email: string): Promise<User> {
         // TODO: Connect to actual database
-        return this._db.users.find(user => user.email === email);
+        // TODO: Doing this for testing (REMOVE)
+        // return this._db.users.find(user => user.email === email);
+        return { email };
     }
 
     public async findUserByID(id: string): Promise<User> {

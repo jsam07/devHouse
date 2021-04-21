@@ -3,22 +3,21 @@ import IPublicMetrics from './publicMetric.interface';
 
 export default interface IUser {
     id?: string;
-    url?: string;
+    userName?: string;
+    imageUrl?: string;
     lastName?: string;
     firstName?: string;
 
     email: string;
     password?: string;
-    type?: number;
     createdAt?: number;
-    username?: string;
+
     private?: boolean;
+    provider?: number;
     location?: string;
     verified?: boolean;
     description?: string;
-    passwordSalt?: string;
-    passwordHash?: string;
-    profileImageURL?: string;
+    hashedPassword?: string;
 
     posts?: IPost[];
     friends?: string[];

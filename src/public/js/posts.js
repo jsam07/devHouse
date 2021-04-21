@@ -3,9 +3,13 @@ const setup = () => {
         loading: true,
         isSidebarOpen: false,
         toggleSidbarMenu() {
-            this.isSidebarOpen = !this.isSidebarOpen
+            this.isSidebarOpen = !this.isSidebarOpen;
         },
         isSettingsPanelOpen: false,
         isSearchBoxOpen: false,
-    }
-}
+    };
+};
+
+$(function () {
+    console.log('ready!');
+});
