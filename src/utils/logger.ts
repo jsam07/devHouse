@@ -41,7 +41,13 @@ const logTransport: winston.transport = new WinstonDaily({
     filename: 'log-%DATE%.log',
 });
 
-const logFormat = combine(timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), format.simple(), prettyPrint(), logFormatter, errors({ stack: true }));
+const logFormat = combine(
+    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    format.simple(),
+    prettyPrint(),
+    logFormatter,
+    errors({ stack: true }),
+);
 
 const consoleLogFormat = combine(
     timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),

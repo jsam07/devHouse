@@ -32,8 +32,9 @@ const expressMiddleware = (app: Application): void => {
     app.use(favicon(faviconPath));
     app.use(morgan('tiny', { stream }));
 
-    app.use(helmet({ ...CSP }));
-    app.use(helmet.contentSecurityPolicy({ ...CSPDirectives }));
+    // TODO: Uncomment
+    // app.use(helmet({ ...CSP }));
+    // app.use(helmet.contentSecurityPolicy({ ...CSPDirectives }));
 
     app.use(compression());
     app.use(express.json());

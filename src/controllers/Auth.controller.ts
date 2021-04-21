@@ -8,6 +8,7 @@ import { logger } from '../utils/logger';
 import UserService from '../services/User.service';
 import AuthenticationService from '../services/Auth.service';
 import User from '../interfaces/user.interface';
+import RequestWithUser from '../interfaces/requestWithUser.interface';
 
 export default class AuthenticationController {
     private authService: AuthenticationService;
@@ -132,13 +133,13 @@ export default class AuthenticationController {
         res.render('login', { error: null });
     };
 
-    public handleGetLogout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public handleGetLogout = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
         try {
             if (req && req.user) {
                 res.clearCookie('token');
                 delete req.user; // Should exist but check for it regardless
             }
-            res.redirect('/');
+            res.redirect('/auth/login');
         } catch (error) {
             logger.error(error);
             next(error);
@@ -171,15 +172,15 @@ export default class AuthenticationController {
             res.cookie('token', token, {
                 httpOnly: true,
                 sameSite: 'strict',
-                maxAge: 0.5 * 60 * 60 * 1000,
+                maxAge: 0.5 * 60 * 60 * 1000, // 0.5 hr
             });
-            res.render('posts', { posts: [] });
+            res.redirect('/auth/login');
         } catch (error) {
             logger.error(error);
         }
     };
 
-    public handlePostLogin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public handlePostLogin = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
         /**
          * TODO:
          *      - Validate inputs
@@ -191,18 +192,20 @@ export default class AuthenticationController {
 
         passport.authenticate('local', { session: false }, async (err, user, info) => {
             try {
-                logger.debug(JSON.stringify(req.body));
+                logger.debug(`Inside handlePostLogin${JSON.stringify(req.body)}`);
                 const { email, password } = req.body;
 
-                const isEmailValid = email.includes('4');
-                const error = {
-                    message: '🚨 Email is not a valid. Please try again',
-                };
-                if (!isEmailValid) return res.render('login', { error });
+                logger.debug(`After local strategy, req.user: ${JSON.stringify(req.user)}`);
 
-                await this.userService.addUser(undefined, email, password);
+                // const isEmailValid = email.includes('4');
+                // const error = {
+                //     message: '🚨 Email is not a valid. Please try again',
+                // };
+                // if (!isEmailValid) return res.render('login', { error });
+
+                // await this.userService.addUser(undefined, email, password);
                 logger.debug(`Cookies:${JSON.stringify(cookieParser.JSONCookies(req.cookies), null, 4)}`);
-                logger.debug('Got into cb');
+                logger.debug('Got into handlePostLogin');
                 if (err) return next(err);
                 if (!user) {
                     return res.status(401).json({
@@ -211,6 +214,7 @@ export default class AuthenticationController {
                     });
                 }
                 logger.debug('User must be defined');
+                // TODO: Create a class that generates a jwt TOKEN
                 // TODO: Refactor to use user id instead; fix JWT_SECRET and save to util/secrets
 
                 const token = jwt.sign({ email, scope: req.body.scope }, 'JWT_SECRET', {
@@ -222,7 +226,8 @@ export default class AuthenticationController {
                     httpOnly: true,
                     sameSite: 'strict',
                 });
-                return res.render('posts', { posts: [] });
+                logger.debug('Redirecting to /posts');
+                return res.redirect('/posts');
             } catch (error) {
                 return logger.error(error);
             }

@@ -25,15 +25,6 @@ export default class AuthenticationRoute implements IRoute {
 
     private initializeRoutes() {
         // GETs
-        // this.router.get(this.getPath('github'));
-
-        // this.router.get(
-        //     this.getPath('github/callback'),
-        //     passport.authenticate('github', { session: false, failureRedirect: '/login' }),
-        //     (req: Request, res: Response) => {
-        //         res.redirect('/');
-        //     },
-        // );
         this.router.get(this.getPath('github'), this.authController.handleGetGitHubLogin);
         this.router.get(this.getPath('github/callback'), this.authController.handleGetGitHubCallback);
         this.router.get(this.getPath('register'), this.authController.handleGetRegister);
