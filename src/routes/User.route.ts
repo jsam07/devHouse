@@ -1,0 +1,47 @@
+import { Router } from 'express';
+import passport from 'passport';
+import IRoute from '../interfaces/route.interface';
+import UserController from '../controllers/User.controller';
+import PostController from '../controllers/Post.controller';
+
+export default class UserRoute implements IRoute {
+    public readonly path: string;
+
+    public router: Router;
+
+    constructor() {
+        this.path = '/user';
+        this.router = Router();
+        this.initializeRoutes();
+    }
+
+    private initializeRoutes(): void {
+        this.router.get(
+            this.getPath(':userId/follow'),
+            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
+            UserController.handleFollowUser,
+        );
+
+        this.router.get(
+            this.getPath(':userId/unfollow'),
+            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
+            UserController.handleUnfollowUser,
+        );
+
+        this.router.get(
+            this.getPath(':postId/like'),
+            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
+            PostController.handleLikePost,
+        );
+
+        this.router.get(
+            this.getPath(':postId/unlike'),
+            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
+            PostController.handleUnlikePost,
+        );
+    }
+
+    private getPath(s: string): string {
+        return `${this.path}/${s}`;
+    }
+}

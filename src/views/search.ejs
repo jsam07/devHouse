@@ -30,7 +30,7 @@
                 <div class="col-span-2 sm:col-span-1 xl:col-span-1">
                   <img
                           alt="..."
-                          src="https://sewausa.org/resources/Sewa%20USA%20Images/Projects/Sewa%20Aspire/Volunteer%20list/9.png"
+                          src="https://source.unsplash.com/collection/302501"
                           class="h-24 w-24 rounded mx-auto"
                   />
                 </div>
@@ -42,18 +42,25 @@
                   <% } %>
                 </div>
                 <div class="col-span-2 sm:col-span-1 xl:col-span-1 italic">
-                  <button
-                          class="text-pink-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                          type="button"
-                          style="transition: all 0.15s ease"
-                  >
-                    <% if(true){ %>
-                      <i class="fa fa-heart mr-2"></i> Following
+                    <% if((user.followers.some(follower => follower.email === searchResults.emailOfCurrentUser))){ %>
+                        <a
+                                href="user/<%=user.id%>/unfollow"
+                                class="text-pink-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                                type="button"
+                                style="transition: all 0.15s ease"
+                        >
+                            <i class="fa fa-heart mr-2"></i> Following
+                        </a>
                     <% } else{ %>
-                      <i class="fa fa-heart-o mr-2"></i>Follow
+                    <a
+                            href="user/<%=user.id%>/follow"
+                            class="text-pink-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                            type="button"
+                            style="transition: all 0.15s ease"
+                    >
+                        <i class="fa fa-heart-o mr-2"></i> Follow
+                    </a>
                     <% } %>
-
-                  </button>
                 </div>
               <% }) %>
 

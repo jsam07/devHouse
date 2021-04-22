@@ -18,7 +18,7 @@ export default class SearchRoute implements IRoute {
         this.router.get(
             this.path,
             passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
-            SearchController.searchForPostsAndUsers,
+            SearchController.handleSearchForPostsAndUsers,
         );
     }
 }

@@ -1,25 +1,16 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 
-import passport from 'passport';
 import IRoute from '../interfaces/route.interface';
 import AuthenticationController from '../controllers/Auth.controller';
-import UserController from '../controllers/User.controller';
-import { logger } from '../utils/logger';
 
 export default class AuthenticationRoute implements IRoute {
     public readonly path: string;
 
-    public router: Router;
-
-    private authController: AuthenticationController;
-
-    private userController: UserController;
+    public readonly router: Router;
 
     constructor() {
         this.path = '/auth';
         this.router = Router();
-        this.authController = new AuthenticationController();
-        this.userController = new UserController();
         this.initializeRoutes();
     }
 

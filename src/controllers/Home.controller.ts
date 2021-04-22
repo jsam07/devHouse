@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 export default class HomeController {
-    public home = (req: Request, res: Response, next: NextFunction): void => {
+    public static home = (req: Request, res: Response, next: NextFunction): void => {
         res.status(200).send('This is the home page');
     };
 }
