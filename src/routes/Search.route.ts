@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
 import IRoute from '../interfaces/route.interface';
-import PostController from '../controllers/Post.controller';
-import PostsHandler from '../interfaces/postsHandler.interface';
 import SearchController from '../controllers/Search.controller';
 
 export default class SearchRoute implements IRoute {
@@ -17,14 +15,10 @@ export default class SearchRoute implements IRoute {
     }
 
     private initializeRoutes(): void {
-        this.router.post(
-            this.getPath('query'),
-            passport.authenticate('jwt', { session: false }),
+        this.router.get(
+            this.path,
+            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
             SearchController.searchForPostsAndUsers,
         );
-    }
-
-    private getPath(s: string): string {
-        return `${this.path}/${s}`;
     }
 }

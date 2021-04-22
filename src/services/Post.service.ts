@@ -1,6 +1,6 @@
 import PrismaDatabase from '../database/Prisma.database';
 import { logger } from '../utils/logger';
-import { Post } from '../interfaces/prisma.models';
+import { Post, User } from '../interfaces/prisma.models';
 import DatabaseException from '../exceptions/DatabaseException';
 
 const { database } = PrismaDatabase;
@@ -85,9 +85,14 @@ export default class PostService {
         }
     }
 
-    public static async findAllPostsLike(keywords: string): Promise<Post[]> {
+    public static async findAllPostsLike(keyword: string): Promise<Post[]> {
         try {
-            const posts: Post[] | null = await database.post.findMany({});
+            const posts: Post[] | null = await database.post.findMany({
+                where: {
+                    content: { contains: keyword },
+                },
+            });
+            logger.info(`Returning all posts that match keyword: ${keyword}`);
             return posts;
         } catch (error) {
             logger.error(error);

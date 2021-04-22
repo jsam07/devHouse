@@ -24,11 +24,19 @@ export default class PostRoute implements IRoute {
     }
 
     private initializeGetRoute(path: string, handler: PostsHandler): void {
-        this.router.get(path, passport.authenticate('jwt', { session: false }), handler);
+        this.router.get(
+            path,
+            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
+            handler,
+        );
     }
 
     private initializePostRoute(path: string, handler: PostsHandler): void {
-        this.router.post(path, passport.authenticate('jwt', { session: false }), handler);
+        this.router.post(
+            path,
+            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
+            handler,
+        );
     }
 
     private getPath(s: string): string {

@@ -15,7 +15,9 @@ export default class SearchController {
             if (!req.user) {
                 res.redirect('/auth/login');
             } else {
-                const keyword = '';
+                const keyword = req.query.query as string;
+
+                logger.debug(`Keyword(s): ${keyword}`);
                 const users = await UserService.findAllUsersLike(keyword);
                 const posts = await PostService.findAllPostsLike(keyword);
                 const searchResults = { users, posts };

@@ -3,6 +3,7 @@ import DoneFunction from '../interfaces/done.function.interface';
 import { logger } from '../utils/logger';
 
 import PrismaDatabase from '../database/Prisma.database';
+import DatabaseException from '../exceptions/DatabaseException';
 
 const { database } = PrismaDatabase;
 
@@ -28,12 +29,26 @@ export default class UserService {
     }
 
     public static async findAllUsersLike(keyword: string): Promise<User[]> {
-        throw new Error('not yet implemented');
+        try {
+            const users: User[] | null = await database.user.findMany({
+                where: {
+                    OR: [
+                        { email: { contains: keyword } },
+                        { firstName: { contains: keyword } },
+                        { lastName: { contains: keyword } },
+                        { userName: { contains: keyword } },
+                    ],
+                },
+            });
+            logger.info(`Returning all users that match keyword: ${keyword}`);
+            return users;
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('findAllUsersLike');
+        }
     }
 
     public static async addUser(userName: string, email: string, password: string): Promise<void> {
-        // const user: User = { email, userName, hashedPassword: password };
-
         async function main() {
             try {
                 await database.user.create({

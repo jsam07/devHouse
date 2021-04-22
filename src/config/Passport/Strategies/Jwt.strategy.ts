@@ -24,9 +24,8 @@ const jwtStrategy: JwtStrategy = new JwtStrategy(
         try {
             logger.debug('Inside jwt verification');
             logger.debug(`Cookie expiration: `);
-            const userService = new UserService();
             // TODO: Check for password
-            const user: User = await userService.findUserByEmail(payload.email);
+            const user = await UserService.findUserByEmail(payload.email);
 
             if (user) {
                 logger.debug('Attaching user to req object from jwt');
