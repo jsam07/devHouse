@@ -1,8 +1,4 @@
-/* eslint-disable class-methods-use-this,@typescript-eslint/no-unused-vars */
-import User from '../interfaces/user.interface';
-import Database from '../interfaces/database.interface';
-import databasemock from '../database/db/database_1615571003434.json';
-import IUserService from '../interfaces/user.service.interface';
+import { Post, User } from '../interfaces/prisma.models';
 import DoneFunction from '../interfaces/done.function.interface';
 import { logger } from '../utils/logger';
 
@@ -11,14 +7,8 @@ import PrismaDatabase from '../database/Prisma.database';
 const { database } = PrismaDatabase;
 
 export default class UserService {
-    readonly _db: any;
-
-    constructor() {
-        this._db = databasemock;
-    }
-
     // TODO: Move UserValidation to it's own middleware
-    public async validateUser(user: User, password: string, done: DoneFunction): Promise<void> {
+    public static async validateUser(user: User, password: string, done: DoneFunction): Promise<void> {
         if (!user) {
             return done(null, false, { message: 'User not found' });
         }
@@ -34,15 +24,15 @@ export default class UserService {
 
     public static async isValidPassword(user: User, password: string): Promise<boolean> {
         // TODO: Use Bcrypt to validate salted password
-        return user.password === password;
+        return true;
     }
 
-    public async addUser(userName: string, email: string, password: string): Promise<void> {
-        const user: User = { email, userName, password };
-        this._db.users.push(user);
-        this._db.users.forEach(_user => {
-            logger.debug(_user.email);
-        });
+    public static async findAllUsersLike(keyword: string): Promise<User[]> {
+        throw new Error('not yet implemented');
+    }
+
+    public static async addUser(userName: string, email: string, password: string): Promise<void> {
+        // const user: User = { email, userName, hashedPassword: password };
 
         async function main() {
             try {
@@ -70,23 +60,24 @@ export default class UserService {
         });
     }
 
-    public async createUser(user: User): Promise<User> {
+    public static async createUser(user: User): Promise<User> {
         throw new Error('Method not implemented.');
     }
 
-    public async findUserByEmail(email: string): Promise<User> {
+    public static async findUserByEmail(email: string): Promise<unknown> {
         // TODO: Connect to actual database
         // TODO: Doing this for testing (REMOVE)
         // return this._db.users.find(user => user.email === email);
         return { email };
     }
 
-    public async findUserByID(id: string): Promise<User> {
+    public static async findUserByID(id: string): Promise<unknown> {
         // TODO: Connect to actual database
-        return this._db.users.find(user => user.id === id);
+        // return this._db.users.find(user => user.id === id);
+        return { email: 'email' };
     }
 
-    public async getUserByEmailAndPassword(email: string, password: string): Promise<User> {
+    public static async getUserByEmailAndPassword(email: string, password: string): Promise<User> {
         throw new Error('Method not implemented.');
     }
 }

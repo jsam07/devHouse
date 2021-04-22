@@ -5,22 +5,13 @@ import cookieParser from 'cookie-parser';
 import { Request, Response, NextFunction } from 'express';
 
 import { logger } from '../utils/logger';
-import UserService from '../services/User.service';
-import AuthenticationService from '../services/Auth.service';
 import User from '../interfaces/user.interface';
 import RequestWithUser from '../interfaces/requestWithUser.interface';
+import PostService from '../services/Post.service';
+import UserService from '../services/User.service';
 
 export default class AuthenticationController {
-    private authService: AuthenticationService;
-
-    private userService: UserService;
-
-    constructor() {
-        this.authService = new AuthenticationService();
-        this.userService = new UserService();
-    }
-
-    public handleJWTAuthentication = (req: Request, res: Response, next: NextFunction): void => {
+    public static handleJWTAuthentication = (req: Request, res: Response, next: NextFunction): void => {
         passport.authenticate('jwt', { session: false }, (err, user, info) => {
             if (err) {
                 logger.error(err);
@@ -39,7 +30,7 @@ export default class AuthenticationController {
         })(req, res, next);
     };
 
-    public handleJWTAuthorization = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public static handleJWTAuthorization = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         passport.authenticate('jwt', { session: false }, (err, user, jwtToken) => {
             if (err) {
                 console.log(err);
@@ -64,7 +55,11 @@ export default class AuthenticationController {
         })(req, res, next);
     };
 
-    public handleLocalAuthentication = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public static handleLocalAuthentication = async (
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> => {
         passport.authenticate('local', { session: false }, (err, user, info) => {
             logger.debug('Got into cb');
             if (err) return next(err);
@@ -86,11 +81,11 @@ export default class AuthenticationController {
         })(req, res, next);
     };
 
-    public handleGetGitHubLogin = (req: Request, res: Response, next: NextFunction): void => {
+    public static handleGetGitHubLogin = (req: Request, res: Response, next: NextFunction): void => {
         passport.authenticate('github', { session: false })(req, res, next);
     };
 
-    public handleGetGitHubCallback = (req: Request, res: Response, next: NextFunction): void => {
+    public static handleGetGitHubCallback = (req: Request, res: Response, next: NextFunction): void => {
         logger.debug('Got into handleGetGitHubCallback');
         passport.authenticate(
             'github',
@@ -117,7 +112,7 @@ export default class AuthenticationController {
         )(req, res, next);
     };
 
-    public handleGetRegister = (req: Request, res: Response, next: NextFunction): void => {
+    public static handleGetRegister = (req: Request, res: Response, next: NextFunction): void => {
         if (req.user) {
             logger.debug('User already registered and logged in, redirecting to home ...');
             res.redirect('/');
@@ -125,7 +120,7 @@ export default class AuthenticationController {
         res.render('register', { error: null });
     };
 
-    public handleGetLogin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public static handleGetLogin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         if (req.user) {
             logger.debug('User already logged in, redirecting to home ...');
             res.render('posts', { posts: [] });
@@ -133,20 +128,28 @@ export default class AuthenticationController {
         res.render('login', { error: null });
     };
 
-    public handleGetLogout = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    public static handleGetLogout = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
         try {
             if (req && req.user) {
-                res.clearCookie('token');
+                // res.clearCookie('token', { path: '/', domain: 'localhost' });
+                // res.cookie('token', '', { maxAge: 0 });
+                res.cookie('token', '', {
+                    httpOnly: true,
+                    sameSite: 'strict',
+                    maxAge: 0, // Now
+                    domain: 'localhost',
+                    path: '/',
+                });
                 delete req.user; // Should exist but check for it regardless
             }
-            res.redirect('/auth/login');
+            res.render('login', { error: null });
         } catch (error) {
             logger.error(error);
             next(error);
         }
     };
 
-    public handlePostRegister = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public static handlePostRegister = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             /**
              * TODO:
@@ -160,7 +163,7 @@ export default class AuthenticationController {
             logger.debug(JSON.stringify(req.body));
             const { userName, email, password } = req.body;
 
-            await this.userService.addUser(userName, email, password);
+            await UserService.addUser(userName, email, password);
             logger.debug(`Cookies:${JSON.stringify(cookieParser.JSONCookies(req.cookies), null, 4)}`);
 
             // TODO: Refactor to use user id instead; fix JWT_SECRET and save to util/secrets
@@ -173,14 +176,17 @@ export default class AuthenticationController {
                 httpOnly: true,
                 sameSite: 'strict',
                 maxAge: 0.5 * 60 * 60 * 1000, // 0.5 hr
+                domain: 'localhost',
+                path: '/',
             });
-            res.redirect('/auth/login');
+            const posts: unknown[] = await PostService.getAllPostsForUser(email);
+            res.render('posts', { posts });
         } catch (error) {
             logger.error(error);
         }
     };
 
-    public handlePostLogin = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    public static handlePostLogin = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
         /**
          * TODO:
          *      - Validate inputs
@@ -217,17 +223,22 @@ export default class AuthenticationController {
                 // TODO: Create a class that generates a jwt TOKEN
                 // TODO: Refactor to use user id instead; fix JWT_SECRET and save to util/secrets
 
+                // TODO: Refactor to use user id instead; fix JWT_SECRET and save to util/secrets
                 const token = jwt.sign({ email, scope: req.body.scope }, 'JWT_SECRET', {
-                    expiresIn: 60 * 5,
+                    expiresIn: 60 * 5, // 5 min
                     // algorithm: 'RS256',
                 });
 
                 res.cookie('token', token, {
                     httpOnly: true,
                     sameSite: 'strict',
+                    maxAge: 0.5 * 60 * 60 * 1000, // 0.5 hr
+                    domain: 'localhost',
+                    path: '/',
                 });
                 logger.debug('Redirecting to /posts');
-                return res.redirect('/posts');
+                const posts: unknown[] = await PostService.getAllPostsForUser(email);
+                return res.render('posts', { posts });
             } catch (error) {
                 return logger.error(error);
             }

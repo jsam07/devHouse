@@ -11,7 +11,11 @@ export default class PostController {
         this.postService = new PostService();
     }
 
-    public handleGetAllPosts = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    public static handleGetAllPosts = async (
+        req: RequestWithUser,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> => {
         try {
             if (!req.user) {
                 return res.redirect('/auth/login');
@@ -24,7 +28,11 @@ export default class PostController {
         }
     };
 
-    public handleGetPostByID = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    public static handleGetPostByID = async (
+        req: RequestWithUser,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> => {
         try {
             if (!req.user) {
                 return res.redirect('/auth/login');
@@ -38,7 +46,7 @@ export default class PostController {
         }
     };
 
-    public handleDeletePost = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    public static handleDeletePost = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
         try {
             if (!req.user) {
                 res.redirect('/auth/login');
@@ -56,7 +64,11 @@ export default class PostController {
         }
     };
 
-    public handleCreateComment = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    public static handleCreateComment = async (
+        req: RequestWithUser,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> => {
         try {
             if (!req.user) {
                 res.redirect('/auth/login');
@@ -75,7 +87,7 @@ export default class PostController {
         }
     };
 
-    public handleCreatePost = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    public static handleCreatePost = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
         try {
             if (!req.user) {
                 return res.redirect('/auth/login');

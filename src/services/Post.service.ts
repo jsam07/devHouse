@@ -1,6 +1,7 @@
 import PrismaDatabase from '../database/Prisma.database';
 import { logger } from '../utils/logger';
 import { Post } from '../interfaces/prisma.models';
+import DatabaseException from '../exceptions/DatabaseException';
 
 const { database } = PrismaDatabase;
 
@@ -19,7 +20,7 @@ export default class PostService {
             return posts;
         } catch (error) {
             logger.error(error);
-            throw error;
+            throw new DatabaseException('getAllPostsForUser');
         }
     }
 
@@ -31,7 +32,7 @@ export default class PostService {
             logger.info(`Post with id =${id} has been deleted.`);
         } catch (error) {
             logger.error(error);
-            throw error;
+            throw new DatabaseException('deleteUserPostById');
         }
     }
 
@@ -49,7 +50,7 @@ export default class PostService {
             return post;
         } catch (error) {
             logger.error(error);
-            throw error;
+            throw new DatabaseException('getPostByID');
         }
     }
 
@@ -65,7 +66,7 @@ export default class PostService {
             });
         } catch (error) {
             logger.error(error);
-            throw error;
+            throw new DatabaseException('createComment');
         }
     }
 
@@ -80,7 +81,17 @@ export default class PostService {
             });
         } catch (error) {
             logger.error(error);
-            throw error;
+            throw new DatabaseException('createPost');
+        }
+    }
+
+    public static async findAllPostsLike(keywords: string): Promise<Post[]> {
+        try {
+            const posts: Post[] | null = await database.post.findMany({});
+            return posts;
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('findAllPostsLike');
         }
     }
 }
