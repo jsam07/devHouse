@@ -127,4 +127,36 @@ export default class PostService {
             throw new DatabaseException('findAllPostsLike');
         }
     }
+
+    public static async likeUserPost(postId: number, email: string): Promise<void> {
+        try {
+            await database.post.update({
+                where: { id: postId },
+                data: {
+                    postLikedFrom: {
+                        connect: [{ email }],
+                    },
+                },
+            });
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('likeUserPost');
+        }
+    }
+
+    public static async unlikeUserPost(postId: number, email: string): Promise<void> {
+        try {
+            await database.post.update({
+                where: { id: postId },
+                data: {
+                    postLikedFrom: {
+                        disconnect: [{ email }],
+                    },
+                },
+            });
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('unlikeUserPost');
+        }
+    }
 }
