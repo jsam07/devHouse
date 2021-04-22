@@ -5,19 +5,16 @@ import HomeController from '../controllers/Home.controller';
 export default class HomeRoute implements IRoute {
     public readonly path: string;
 
-    public router: Router;
-
-    private homeController: HomeController;
+    public readonly router: Router;
 
     constructor() {
         this.path = '/';
         this.router = Router();
-        this.homeController = new HomeController();
         this.initializeRoutes();
     }
 
     private initializeRoutes() {
         // TODO: Add middleware to re-route to signup/login if user is not authenticated
-        this.router.get(`${this.path}`, this.homeController.home);
+        this.router.get(`${this.path}`, HomeController.home);
     }
 }

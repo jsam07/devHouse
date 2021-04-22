@@ -6,7 +6,7 @@ import { Post, User } from '../interfaces/prisma.models';
 import { logger } from '../utils/logger';
 
 export default class SearchController {
-    public static searchForPostsAndUsers = async (
+    public static handleSearchForPostsAndUsers = async (
         req: RequestWithUser,
         res: Response,
         next: NextFunction,
@@ -15,12 +15,13 @@ export default class SearchController {
             if (!req.user) {
                 res.redirect('/auth/login');
             } else {
+                const { email: emailOfCurrentUser } = req.user;
                 const keyword = req.query.query as string;
 
                 logger.debug(`Keyword(s): ${keyword}`);
                 const users = await UserService.findAllUsersLike(keyword);
                 const posts = await PostService.findAllPostsLike(keyword);
-                const searchResults = { users, posts };
+                const searchResults = { users, posts, emailOfCurrentUser };
                 logger.debug(JSON.stringify(searchResults, null, 4));
 
                 res.render('search', { searchResults });

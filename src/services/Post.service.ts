@@ -1,6 +1,6 @@
 import PrismaDatabase from '../database/Prisma.database';
 import { logger } from '../utils/logger';
-import { Post, User } from '../interfaces/prisma.models';
+import { Post } from '../interfaces/prisma.models';
 import DatabaseException from '../exceptions/DatabaseException';
 
 const { database } = PrismaDatabase;
@@ -21,6 +21,34 @@ export default class PostService {
         } catch (error) {
             logger.error(error);
             throw new DatabaseException('getAllPostsForUser');
+        }
+    }
+
+    public static async getAllPostsFromFriends(email: string): Promise<Post[]> {
+        try {
+            // Find posts made by user's friends
+            const posts: Post[] | null = await database.post.findMany({
+                where: {
+                    author: {
+                        followers: {
+                            some: {
+                                email,
+                            },
+                        },
+                    },
+                },
+                include: {
+                    comments: true,
+                    reposts: true,
+                    postLikedFrom: true,
+                },
+            });
+            logger.debug(posts);
+            logger.info(`Returning all friend posts for email: ${email}`);
+            return posts;
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('getAllPostsFromFriends');
         }
     }
 

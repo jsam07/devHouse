@@ -7,7 +7,6 @@ import { Request, Response, NextFunction } from 'express';
 import { logger } from '../utils/logger';
 import User from '../interfaces/user.interface';
 import RequestWithUser from '../interfaces/requestWithUser.interface';
-import PostService from '../services/Post.service';
 import UserService from '../services/User.service';
 
 export default class AuthenticationController {
@@ -107,7 +106,8 @@ export default class AuthenticationController {
                 });
 
                 // TODO: Get Posts for specific user
-                res.render('posts', { posts: [] });
+                // res.render('posts', { posts: {adminPosts, friendsPosts} });
+                res.redirect('/posts');
             },
         )(req, res, next);
     };
@@ -179,8 +179,9 @@ export default class AuthenticationController {
                 domain: 'localhost',
                 path: '/',
             });
-            const posts: unknown[] = await PostService.getAllPostsForUser(email);
-            res.render('posts', { posts });
+            // const posts: unknown[] = await PostService.getAllPostsForUser(email);
+            // res.render('posts', { posts });
+            res.redirect('/posts');
         } catch (error) {
             logger.error(error);
         }
@@ -237,8 +238,9 @@ export default class AuthenticationController {
                     path: '/',
                 });
                 logger.debug('Redirecting to /posts');
-                const posts: unknown[] = await PostService.getAllPostsForUser(email);
-                return res.render('posts', { posts });
+                // const posts: unknown[] = await PostService.getAllPostsForUser(email);
+                // return res.render('posts', { posts });
+                return res.redirect('/posts');
             } catch (error) {
                 return logger.error(error);
             }

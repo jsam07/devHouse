@@ -30,14 +30,23 @@ export default class UserService {
 
     public static async findAllUsersLike(keyword: string): Promise<User[]> {
         try {
+            const searchCriteria = { contains: keyword };
             const users: User[] | null = await database.user.findMany({
                 where: {
                     OR: [
-                        { email: { contains: keyword } },
-                        { firstName: { contains: keyword } },
-                        { lastName: { contains: keyword } },
-                        { userName: { contains: keyword } },
+                        { email: searchCriteria },
+                        { firstName: searchCriteria },
+                        { lastName: searchCriteria },
+                        { userName: searchCriteria },
                     ],
+                },
+                include: {
+                    followers: {
+                        select: {
+                            id: true,
+                            email: true,
+                        },
+                    },
                 },
             });
             logger.info(`Returning all users that match keyword: ${keyword}`);
@@ -45,6 +54,42 @@ export default class UserService {
         } catch (error) {
             logger.error(error);
             throw new DatabaseException('findAllUsersLike');
+        }
+    }
+
+    public static async followUser(userToFollow: number, email: string): Promise<void> {
+        try {
+            await database.user.update({
+                where: {
+                    email,
+                },
+                data: {
+                    friends: {
+                        connect: [{ id: userToFollow }],
+                    },
+                },
+            });
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('followUser');
+        }
+    }
+
+    public static async unFollowUser(userToUnfollow: number, email: string): Promise<void> {
+        try {
+            await database.user.update({
+                where: {
+                    email,
+                },
+                data: {
+                    friends: {
+                        disconnect: [{ id: userToUnfollow }],
+                    },
+                },
+            });
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('followUser');
         }
     }
 
