@@ -120,6 +120,10 @@ export default class PostController {
             if (!req.user) {
                 res.redirect('/auth/login');
             } else {
+                const { email } = req.user;
+                const { id: postId } = req.params;
+
+                await PostService.likeUserPost(parseInt(postId, 10), email);
             }
         } catch (error) {
             next(error);
@@ -131,6 +135,10 @@ export default class PostController {
             if (!req.user) {
                 res.redirect('/auth/login');
             } else {
+                const { email } = req.user;
+                const { id: postId } = req.params;
+
+                await PostService.unlikeUserPost(parseInt(postId, 10), email);
             }
         } catch (error) {
             next(error);

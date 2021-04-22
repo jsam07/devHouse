@@ -358,13 +358,13 @@
                       post.reposts.length %></a
                   ></span
                 >
-                <span class="mr-8"
-                ><a
-                          href="#"
-                          class="text-grey-dark hover:no-underline hover:text-red"
-                  ><i class="fa fa-heart fa-lg mr-2"></i> <%= post.postLikedFrom.length
-                    %></a
-                  ></span
+                <span class="mr-8">
+                  <a
+                          href="/user/<%= post.id %>/like"
+                          class="text-grey-dark hover:no-underline hover:text-red">
+                    <i class="fa fa-heart-o fa-lg mr-2"></i> <%= post.postLikedFrom.length %>
+                  </a>
+                </span
                 >
               </div>
             </div>
