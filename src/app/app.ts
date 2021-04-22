@@ -33,7 +33,7 @@ export default class App {
     }
 
     public listen(): void {
-        this._app.listen(this.port, () => {
+        this._app.listen(process.env.PORT || 3000, () => {
             logger.info(`🚀 Application Started; Listening on port: ${this._port}`);
         });
     }
