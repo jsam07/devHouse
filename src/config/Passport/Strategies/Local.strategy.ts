@@ -4,6 +4,7 @@ import User from '../../../interfaces/user.interface';
 import UserService from '../../../services/User.service';
 import PassportStrategy from '../../../interfaces/passport.strategy.interface';
 import { logger } from '../../../utils/logger';
+import RequestWithUser from '../../../interfaces/requestWithUser.interface';
 
 const userService = new UserService();
 const localStrategy: LocalStrategy = new LocalStrategy(
@@ -12,10 +13,10 @@ const localStrategy: LocalStrategy = new LocalStrategy(
         passwordField: 'password',
         passReqToCallback: true,
     },
-    async (req, email, password, done) => {
+    async (req: RequestWithUser, email, password, done) => {
         try {
             logger.debug('Got into local strategy try block');
-            const user: User = await userService.findUserByEmail(email);
+            const user = await UserService.findUserByEmail(email);
             logger.debug('Got USER');
 
             if (!user) {
@@ -30,7 +31,10 @@ const localStrategy: LocalStrategy = new LocalStrategy(
 
             logger.debug('Returning USER');
             logger.debug('Attaching user to req object from local');
+
             req.user = {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 email: user.email,
             };
             logger.debug(`From local, checking req.user = ${JSON.stringify(req.user)}`);
