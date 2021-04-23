@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import { logger } from '../utils/logger';
-import { saltRounds } from '../utils/secrets';
+import { SALT_ROUNDS } from '../utils/secrets';
 import { User } from '../interfaces/prisma.models';
 import PrismaDatabase from '../database/Prisma.database';
 import DatabaseException from '../exceptions/DatabaseException';
@@ -88,7 +88,7 @@ export default class UserService {
         password: string,
     ): Promise<void> {
         try {
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
             await database.user.create({
                 data: {
                     email,
