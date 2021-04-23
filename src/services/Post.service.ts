@@ -92,6 +92,7 @@ export default class PostService {
                     content: commentText,
                 },
             });
+            logger.info(`User ${email} commented under post: ${postId}`);
         } catch (error) {
             logger.error(error);
             throw new DatabaseException('createComment');
@@ -107,9 +108,32 @@ export default class PostService {
                     authorId: id,
                 },
             });
+            logger.info(`User ${email} created a new post`);
         } catch (error) {
             logger.error(error);
             throw new DatabaseException('createPost');
+        }
+    }
+
+    public static async createRepost(postId: number, email: string): Promise<void> {
+        try {
+            const { id } = await database.user.findUnique({ where: { email } });
+            const { content, authorId } = await database.post.findUnique({ where: { id: postId } });
+
+            // Restrict author from reposting their own post (db may enforce this too)
+            if (authorId !== id) {
+                await database.post.create({
+                    data: {
+                        content,
+                        authorId: id,
+                        parentPostId: postId,
+                    },
+                });
+            }
+            logger.info(`User ${email} reposted post: ${postId}`);
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('createRepost');
         }
     }
 

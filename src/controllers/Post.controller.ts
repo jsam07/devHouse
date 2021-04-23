@@ -83,6 +83,23 @@ export default class PostController {
         }
     };
 
+    public static handleRepost = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            if (!req.user) {
+                res.redirect('/auth/login');
+            } else {
+                const { email }: User = req.user;
+                const { postId } = req.params;
+
+                await PostService.createRepost(parseInt(postId, 10), email);
+
+                res.redirect('/posts');
+            }
+        } catch (error) {
+            next(error);
+        }
+    };
+
     public static handleCreatePost = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
         try {
             if (!req.user) {
