@@ -10,10 +10,8 @@ const setup = () => {
     };
 };
 
-const validateForm = (e) => {
-    e.preventDefault();
+const validateForm = () => {
     const postContent = document.getElementById('post-content').value;
-    console.log(postContent);
     if(postContent.trim() === '') {
         alert('Post cannot be empty');
         return false;
