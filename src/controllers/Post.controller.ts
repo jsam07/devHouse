@@ -89,7 +89,7 @@ export default class PostController {
                 res.redirect('/auth/login');
             } else {
                 const { email }: User = req.user;
-                const { id: postId } = req.params;
+                const { postId } = req.params;
 
                 await PostService.createRepost(parseInt(postId, 10), email);
 
