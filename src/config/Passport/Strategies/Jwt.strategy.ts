@@ -1,6 +1,5 @@
 import { Strategy as JwtStrategy } from 'passport-jwt';
 
-import { logger } from '../../../utils/logger';
 import { JWT_SECRET } from '../../../utils/secrets';
 import UserService from '../../../services/User.service';
 import PassportStrategy from '../../../interfaces/passport.strategy.interface';

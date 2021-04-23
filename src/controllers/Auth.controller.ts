@@ -4,9 +4,9 @@ import passport from 'passport';
 import { Request, Response, NextFunction } from 'express';
 
 import { logger } from '../utils/logger';
-import { JWT_SECRET } from '../utils/secrets';
 import UserService from '../services/User.service';
 import ValidationService from '../services/Validation.service';
+import { COOKIE_OPTS, JWT_OPTS, JWT_SECRET } from '../utils/secrets';
 import RequestWithUser from '../interfaces/requestWithUser.interface';
 
 export default class AuthenticationController {
@@ -16,7 +16,7 @@ export default class AuthenticationController {
 
     public static handleGetRegister = (req: Request, res: Response, next: NextFunction): void => {
         if (req.user) {
-            logger.debug('User already registered and logged in, redirecting to home ...');
+            logger.info('User already registered and logged in, redirecting to home ...');
             res.redirect('/');
         }
         res.render('register', { error: null });
@@ -24,7 +24,7 @@ export default class AuthenticationController {
 
     public static handleGetLogin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         if (req.user) {
-            logger.debug('User already logged in, redirecting to home ...');
+            logger.info('User already logged in, redirecting to home ...');
             res.redirect('/posts');
         }
         res.render('login', { error: null });
@@ -58,11 +58,7 @@ export default class AuthenticationController {
 
             await UserService.createUser(userName, firstName, lastName, email, password);
             const token = AuthenticationController.generateJwt(email);
-            res.cookie('token', token, {
-                httpOnly: true,
-                sameSite: 'strict',
-                maxAge: 0.5 * 60 * 60 * 1000, // 0.5 hr
-            });
+            res.cookie('token', token, COOKIE_OPTS);
 
             return res.redirect('/posts');
         } catch (error) {
@@ -81,11 +77,7 @@ export default class AuthenticationController {
 
                     const { email } = req.body;
                     const token = AuthenticationController.generateJwt(email);
-                    res.cookie('token', token, {
-                        httpOnly: true,
-                        sameSite: 'strict',
-                        maxAge: 0.5 * 60 * 60 * 1000, // 0.5 hr
-                    });
+                    res.cookie('token', token, COOKIE_OPTS);
 
                     return res.redirect('/posts');
                 } catch (error) {
@@ -97,8 +89,6 @@ export default class AuthenticationController {
     };
 
     private static generateJwt(email: string): string {
-        return jwt.sign({ email }, JWT_SECRET, {
-            expiresIn: 60 * 5, // 5 min
-        });
+        return jwt.sign({ email }, JWT_SECRET, JWT_OPTS);
     }
 }
