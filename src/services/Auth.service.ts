@@ -1,14 +1,23 @@
 /* eslint-disable class-methods-use-this,@typescript-eslint/no-unused-vars */
-import IUser from '../interfaces/user.interface';
-import Database from '../interfaces/database.interface';
-import database2 from '../database/db/database_1615571003434.json';
-import IAuthService from '../interfaces/auth.service.interface';
+import bcrypt from 'bcrypt';
 
-import DoneFunction from '../interfaces/done.function.interface';
 import { logger } from '../utils/logger';
-
+import { User } from '../interfaces/prisma.models';
 import PrismaDatabase from '../database/Prisma.database';
+import DatabaseException from '../exceptions/DatabaseException';
 
 const { database } = PrismaDatabase;
 
-export default class AuthenticationService {}
+export default class AuthenticationService {
+    public static async isPasswordValid(userIn: User, password: string): Promise<boolean> {
+        try {
+            const { hashedPassword } = await database.user.findUnique({
+                where: { email: userIn.email },
+            });
+            return await bcrypt.compare(password, hashedPassword);
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('isValidPassword');
+        }
+    }
+}

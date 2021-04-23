@@ -69,7 +69,6 @@ const options: LoggerOptions = {
 winston.addColors(loggerConfig.colors);
 const logger: winston.Logger = winston.createLogger(options);
 
-// Maybe log to console only when in development
 logger.add(
     new winston.transports.Console({
         level: 'data',
@@ -82,15 +81,6 @@ const stream = {
         logger.http(message.substring(0, message.lastIndexOf('\n')));
     },
 };
-
-// logger.debug("debug - there's no place like home");
-// logger.verbose("verbose - there's no place like home");
-// logger.http("info- there's no place like home");
-// logger.data("info- there's no place like home");
-// logger.info("info - there's no place like home");
-// logger.warn("warn - there's no place like home");
-// logger.error("error - there's no place like home");
-// logger.error(new Error('This is a test error'));
 
 // TODO: Turn this logger into a [static??] class
 export { stream, logger };

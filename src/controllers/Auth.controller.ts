@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
+import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import { Request, Response, NextFunction } from 'express';
 
@@ -8,52 +9,10 @@ import { logger } from '../utils/logger';
 import User from '../interfaces/user.interface';
 import RequestWithUser from '../interfaces/requestWithUser.interface';
 import UserService from '../services/User.service';
+import { saltRounds } from '../utils/secrets';
+import ValidationService from '../services/Validation.service';
 
 export default class AuthenticationController {
-    public static handleJWTAuthentication = (req: Request, res: Response, next: NextFunction): void => {
-        passport.authenticate('jwt', { session: false }, (err, user, info) => {
-            if (err) {
-                logger.error(err);
-                return res.status(401).json({
-                    status: 'error',
-                    code: 'unauthorized',
-                });
-            }
-            if (!user) {
-                return res.status(401).json({
-                    status: 'error',
-                    code: 'unauthorized',
-                });
-            }
-            return next();
-        })(req, res, next);
-    };
-
-    public static handleJWTAuthorization = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        passport.authenticate('jwt', { session: false }, (err, user, jwtToken) => {
-            if (err) {
-                console.log(err);
-                return res.status(401).json({
-                    status: 'error',
-                    code: 'unauthorized',
-                });
-            }
-            if (!user) {
-                return res.status(401).json({
-                    status: 'error',
-                    code: 'unauthorized',
-                });
-            }
-            const scope = req.baseUrl.split('/').slice(-1)[0];
-            const authScope = jwtToken.scope;
-            if (authScope && authScope.indexOf(scope) > -1) {
-                return next();
-            }
-
-            return res.status(401).json({ status: 'error', code: 'unauthorized' });
-        })(req, res, next);
-    };
-
     public static handleLocalAuthentication = async (
         req: Request,
         res: Response,
@@ -161,9 +120,19 @@ export default class AuthenticationController {
              */
 
             logger.debug(JSON.stringify(req.body));
-            const { userName, email, password } = req.body;
+            const { userName, firstName, lastName, email, password } = req.body;
 
-            await UserService.addUser(userName, email, password);
+            const validateErrors = await ValidationService.checkUserInputs(
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+            );
+
+            if (validateErrors.length > 0) return res.render('register', { error: validateErrors[0] });
+
+            await UserService.createUser(userName, firstName, lastName, email, password);
             logger.debug(`Cookies:${JSON.stringify(cookieParser.JSONCookies(req.cookies), null, 4)}`);
 
             // TODO: Refactor to use user id instead; fix JWT_SECRET and save to util/secrets
@@ -181,9 +150,10 @@ export default class AuthenticationController {
             });
             // const posts: unknown[] = await PostService.getAllPostsForUser(email);
             // res.render('posts', { posts });
-            res.redirect('/posts');
+            return res.redirect('/posts');
         } catch (error) {
             logger.error(error);
+            return next(error);
         }
     };
 
@@ -197,53 +167,32 @@ export default class AuthenticationController {
          *      - Generate jwt and add to cookie
          */
 
-        passport.authenticate('local', { session: false }, async (err, user, info) => {
-            try {
-                logger.debug(`Inside handlePostLogin${JSON.stringify(req.body)}`);
-                const { email, password } = req.body;
+        passport.authenticate(
+            'local',
+            { session: false },
+            async (err, user, info): Promise<void> => {
+                try {
+                    if (err) return res.render('login', { error: err.message });
 
-                logger.debug(`After local strategy, req.user: ${JSON.stringify(req.user)}`);
-
-                // const isEmailValid = email.includes('4');
-                // const error = {
-                //     message: '🚨 Email is not a valid. Please try again',
-                // };
-                // if (!isEmailValid) return res.render('login', { error });
-
-                // await this.userService.addUser(undefined, email, password);
-                logger.debug(`Cookies:${JSON.stringify(cookieParser.JSONCookies(req.cookies), null, 4)}`);
-                logger.debug('Got into handlePostLogin');
-                if (err) return next(err);
-                if (!user) {
-                    return res.status(401).json({
-                        status: 'error',
-                        code: 'unauthorized',
+                    const { email } = req.body;
+                    // TODO: Refactor to use user id instead; fix JWT_SECRET and save to util/secrets
+                    const token = jwt.sign({ email }, 'JWT_SECRET', {
+                        expiresIn: 60 * 5, // 5 min
+                        // algorithm: 'RS256',
                     });
+
+                    res.cookie('token', token, {
+                        httpOnly: true,
+                        sameSite: 'strict',
+                        maxAge: 0.5 * 60 * 60 * 1000, // 0.5 hr
+                    });
+
+                    return res.redirect('/posts');
+                } catch (error) {
+                    logger.error(error);
+                    return next(error);
                 }
-                logger.debug('User must be defined');
-                // TODO: Create a class that generates a jwt TOKEN
-                // TODO: Refactor to use user id instead; fix JWT_SECRET and save to util/secrets
-
-                // TODO: Refactor to use user id instead; fix JWT_SECRET and save to util/secrets
-                const token = jwt.sign({ email, scope: req.body.scope }, 'JWT_SECRET', {
-                    expiresIn: 60 * 5, // 5 min
-                    // algorithm: 'RS256',
-                });
-
-                res.cookie('token', token, {
-                    httpOnly: true,
-                    sameSite: 'strict',
-                    maxAge: 0.5 * 60 * 60 * 1000, // 0.5 hr
-                    domain: 'localhost',
-                    path: '/',
-                });
-                logger.debug('Redirecting to /posts');
-                // const posts: unknown[] = await PostService.getAllPostsForUser(email);
-                // return res.render('posts', { posts });
-                return res.redirect('/posts');
-            } catch (error) {
-                return logger.error(error);
-            }
-        })(req, res, next);
+            },
+        )(req, res, next);
     };
 }

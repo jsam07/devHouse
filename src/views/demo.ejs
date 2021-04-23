@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    <link rel="stylesheet" href="css/demo.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/demo.js"></script>
 
 </head>
 <body class="bg-grey-light font-sans" data-new-gr-c-s-check-loaded="8.872.0" data-gr-ext-installed="">
@@ -49,9 +51,9 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
               </span>
-                    <form>
+
                         <input type="text" name="query" placeholder="Search" class="px-4 py-3 rounded-md hover:bg-gray-100 lg:max-w-sm md:py-2 md:flex-1 focus:outline-none md:focus:bg-gray-100 md:focus:shadow md:focus:border">
-                    </form>
+
                 </div>
 
                 <!-- Navbar right -->
@@ -107,17 +109,9 @@
                         <!-- Dropdown card -->
                         <div @click.away="isOpen = false" x-show.transition.opacity="isOpen" class="z-50 absolute mt-3 transform -translate-x-full bg-white rounded-md shadow-lg min-w-max" style="display: none;">
                             <div class="flex flex-col p-4 space-y-1 font-medium border-b">
-                                <span class="text-gray-800">John Doe</span>
-                                <span class="text-sm text-gray-400">john.doe@gmail.com</span>
+                                <span class="text-gray-800">Demo User</span>
+                                <span class="text-sm text-gray-400">demo.user@gmail.com</span>
                             </div>
-                            <ul class="flex flex-col p-2 my-2 space-y-1">
-                                <li>
-                                    <a href="#" class="block px-2 py-1 transition no-underline rounded-md hover:bg-gray-100">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="/auth/logout" class="block px-2 py-1 transition no-underline rounded-md hover:bg-gray-100">Logout</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -128,185 +122,185 @@
             <div class="bg-white  mx-auto w-full sm:w-11/12 md:w-8/12 lg:w-6/12 rounded">
                 <div class="flex items-center justify-start gap-3 py-2 mx-3 border-b">
                     <img class="w-12 h-12 rounded-full" src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif">
-                    <form class="w-full" action="/posts" method="POST">
-                        <input class="w-9/12 bg-gray-200 rounded-full px-3 py-2" name="postText" placeholder="What's on your mind, Ross?">
+                    <form class="w-full" id="post-form">
+                        <input id="post-text" class="w-9/12 bg-gray-200 rounded-full px-3 py-2" name="postText" placeholder="What's on your mind, Demo User?">
                         <input class="transition duration-500 ease-in-out hover:bg-red-600 transform w-2/12 rounded-full p-2 bg-gray-800 cursor-pointer text-gray-200" type="submit" value="Post">
                     </form>
                 </div>
                 <div></div>
             </div>
 
-            <!-- Post begins -->
+            <!-- Posts begins -->
 
-            <div class="flex bg-gray-100 mb-4 rounded-lg">
-                <div class="w-1/8 text-right pl-3 pt-3">
-                    <div>
-                        <a href="#"><img src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif" alt="avatar" class="rounded-full h-12 w-12 mr-2"></a>
-                    </div>
-                </div>
-
-                <div class="w-7/8 p-3 pl-0">
-                    <!-- <div class="text-xs text-grey-dark">Reposted</div> -->
-                    <div class="flex justify-between">
+            <div id="posts-container">
+                <div class="flex bg-gray-100 mb-4 rounded-lg">
+                    <div class="w-1/8 text-right pl-3 pt-3">
                         <div>
-                            <span class="font-bold"><a href="#" class="text-black">Demo User</a></span>
-                            <span class="text-grey-dark">·</span>
-                            <span class="text-grey-dark">Tue Apr 20 2021 20:31:57 GMT-0700 (Pacific Daylight Time)</span>
-                            <span class="inline-block">
-                  <form action="/posts/delete" method="post">
-                    <input type="hidden" value="8" name="postToDelete">
-                    <button type="submit"><i class="transition duration-500 ease-in-out hover:bg-gray-300 transform p-5 rounded-full fa fa-trash"></i></button>
-                  </form>
-
-                </span>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="mb-4">
-                            <p class="mb-6">Derek Chauvin has been found guilty of the murder of George Floyd. The former Minneapolis police officer was convicted of all three charges -- second-degree murder, third-degree murder, and second-degree manslaughter.</p>
-                        </div>
-                        <div class="pb-2">
-                            <span class="mr-8"><a href="/posts/8" class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-comment fa-lg mr-2"></i> 4</a></span>
-                            <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 1</a></span>
-                            <span class="mr-8">
-
-                    <a href="/posts/8/like" class="text-grey-dark hover:no-underline hover:text-red">
-                    <i class="fa fa-heart-o fa-lg mr-2"></i> 0
-                  </a>
-
-
-                </span>
+                            <a href="#"><img src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif" alt="avatar" class="rounded-full h-12 w-12 mr-2"></a>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="flex bg-gray-100 mb-4 rounded-lg">
-                <div class="w-1/8 text-right pl-3 pt-3">
-                    <div>
-                        <a href="#"><img src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif" alt="avatar" class="rounded-full h-12 w-12 mr-2"></a>
-                    </div>
-                </div>
+                    <div class="w-7/8 p-3 pl-0">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-bold"><a href="#" class="text-black">Demo User</a></span>
+                                <span class="text-grey-dark">·</span>
+                                <span class="text-grey-dark">Tue Apr 20 2021 20:31:57 GMT-0700 (Pacific Daylight Time)</span>
+                                <span class="inline-block">
+                                  <form class="delete-post-form">
+                                    <input type="hidden" value="8" name="postToDelete">
+                                    <button type="submit"><i class="transition duration-500 ease-in-out hover:bg-gray-300 transform p-5 rounded-full fa fa-trash"></i></button>
+                                  </form>
 
-                <div class="w-7/8 p-3 pl-0">
-                    <div class="flex justify-between">
+                                </span>
+                            </div>
+                        </div>
                         <div>
-                            <span class="font-bold"><a href="#" class="text-black">Demo User</a></span>
-                            <span class="text-grey-dark">·</span>
-                            <span class="text-grey-dark">Tue Apr 20 2021 20:35:46 GMT-0700 (Pacific Daylight Time)</span>
-                            <span class="inline-block">
-                  <form action="/posts/delete" method="post">
+                            <div class="mb-4">
+                                <p class="mb-6">Derek Chauvin has been found guilty of the murder of George Floyd. The former Minneapolis police officer was convicted of all three charges -- second-degree murder, third-degree murder, and second-degree manslaughter.</p>
+                            </div>
+                            <div class="pb-2">
+                                <span class="mr-8"><a  class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-comment fa-lg mr-2"></i> 4</a></span>
+                                <span class="mr-8"><a  class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 1</a></span>
+                                <span class="mr-8">
+                                    <a  class="text-grey-dark hover:no-underline hover:text-red">
+                                        <i class="fa fa-heart-o fa-lg mr-2"></i> 0
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex bg-gray-100 mb-4 rounded-lg">
+                    <div class="w-1/8 text-right pl-3 pt-3">
+                        <div>
+                            <a href="#"><img src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif" alt="avatar" class="rounded-full h-12 w-12 mr-2"></a>
+                        </div>
+                    </div>
+
+                    <div class="w-7/8 p-3 pl-0">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-bold"><a href="#" class="text-black">Demo User</a></span>
+                                <span class="text-grey-dark">·</span>
+                                <span class="text-grey-dark">Tue Apr 20 2021 20:35:46 GMT-0700 (Pacific Daylight Time)</span>
+                                <span class="inline-block">
+                  <form class="delete-post-form">
                     <input type="hidden" value="10" name="postToDelete">
                     <button type="submit"><i class="transition duration-500 ease-in-out hover:bg-gray-300 transform p-5 rounded-full fa fa-trash"></i></button>
                   </form>
 
                 </span>
-                        </div>
+                            </div>
 
-                    </div>
-                    <div>
-                        <div class="mb-4">
-                            <p class="mb-6">❌ #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate</p>
                         </div>
-                        <div class="pb-2">
-                            <span class="mr-8"><a href="/posts/10" class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-comment fa-lg mr-2"></i> 1</a></span>
-                            <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 0</a></span>
-                            <span class="mr-8">
+                        <div>
+                            <div class="mb-4">
+                                <p class="mb-6">❌ #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate #StopAsianHate</p>
+                            </div>
+                            <div class="pb-2">
+                                <span class="mr-8"><a  class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-comment fa-lg mr-2"></i> 1</a></span>
+                                <span class="mr-8"><a  class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 0</a></span>
+                                <span class="mr-8">
 
-                    <a href="/posts/10/like" class="text-grey-dark hover:no-underline hover:text-red">
+                    <a  class="text-grey-dark hover:no-underline hover:text-red">
                     <i class="fa fa-heart-o fa-lg mr-2"></i> 4
                   </a>
 
 
                 </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="flex bg-gray-100 mb-4 rounded-lg">
-                <div class="w-1/8 text-right pl-3 pt-3">
-                    <div>
-                        <a href="#"><img src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif" alt="avatar" class="rounded-full h-12 w-12 mr-2"></a>
-                    </div>
-                </div>
 
-                <div class="w-7/8 p-3 pl-0">
-                    <!-- <div class="text-xs text-grey-dark">Reposted</div> -->
-                    <div class="flex justify-between">
+
+
+                <div class="flex bg-gray-100 mb-4 rounded-lg">
+                    <div class="w-1/8 text-right pl-3 pt-3">
                         <div>
-                            <span class="font-bold"><a href="#" class="text-black">Demo User</a></span>
-                            <span class="text-grey-dark">·</span>
-                            <span class="text-grey-dark">Wed Apr 21 2021 02:34:41 GMT-0700 (Pacific Daylight Time)</span>
-                            <span class="inline-block">
-                  <form action="/posts/delete" method="post">
-                    <input type="hidden" value="12" name="postToDelete">
-                    <button type="submit"><i class="transition duration-500 ease-in-out hover:bg-gray-300 transform p-5 rounded-full fa fa-trash"></i></button>
-                  </form>
-
-                </span>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="mb-4">
-                            <p class="mb-6">On this date in 1986, Michael Jordan erupted for an NBA playoffs record 63 points in Game 2 of the opening round vs. Boston. #NBAVault</p>
-                        </div>
-                        <div class="pb-2">
-                            <span class="mr-8"><a href="/posts/12" class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-comment fa-lg mr-2"></i> 1</a></span>
-                            <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 0</a></span>
-                            <span class="mr-8">
-
-                    <a href="/posts/12/unlike" class="text-grey-dark hover:no-underline hover:text-red">
-                    <i class="fa fa-heart fa-lg mr-2"></i> 1
-                  </a>
-
-
-                </span>
+                            <a href="#"><img src="https://source.unsplash.com/collection/302501" alt="avatar" class="rounded-full h-12 w-12 mr-2"></a>
                         </div>
                     </div>
-                </div>
-            </div>
 
+                    <div class="w-7/8 p-3 pl-0">
+                        <!-- <div class="text-xs text-grey-dark">Reposted</div> -->
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-bold"><a href="#" class="text-black">NBA</a></span>
+                                <span class="text-grey-dark">·</span>
+                                <span class="text-grey-dark">Tue Mar 30 2021 01:40:05 GMT-0700 (Pacific Daylight Time)</span>
+                            </div>
 
-
-            <div class="flex bg-gray-100 mb-4 rounded-lg">
-                <div class="w-1/8 text-right pl-3 pt-3">
-                    <div>
-                        <a href="#"><img src="https://source.unsplash.com/collection/302501" alt="avatar" class="rounded-full h-12 w-12 mr-2"></a>
-                    </div>
-                </div>
-
-                <div class="w-7/8 p-3 pl-0">
-                    <!-- <div class="text-xs text-grey-dark">Reposted</div> -->
-                    <div class="flex justify-between">
+                        </div>
                         <div>
-                            <span class="font-bold"><a href="#" class="text-black">NBA</a></span>
-                            <span class="text-grey-dark">·</span>
-                            <span class="text-grey-dark">Tue Mar 30 2021 01:40:05 GMT-0700 (Pacific Daylight Time)</span>
-                        </div>
+                            <div class="mb-4">
+                                <p class="mb-6">⚡️  @russwest44  goes off for the first 35+ point, 20+ assist triple-double in NBA history, setting multiple records in the @WashWizards  win!</p>
+                            </div>
+                            <div class="pb-2">
+                                <span class="mr-8"><a  class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-comment fa-lg mr-2"></i> 1</a></span>
+                                <span class="mr-8"><a  class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 0</a></span>
+                                <span class="mr-8">
 
-                    </div>
-                    <div>
-                        <div class="mb-4">
-                            <p class="mb-6">⚡️  @russwest44  goes off for the first 35+ point, 20+ assist triple-double in NBA history, setting multiple records in the @WashWizards  win!</p>
-                        </div>
-                        <div class="pb-2">
-                            <span class="mr-8"><a href="/posts/4" class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-comment fa-lg mr-2"></i> 1</a></span>
-                            <span class="mr-8"><a href="#" class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i> 0</a></span>
-                            <span class="mr-8">
-
-                    <a href="/posts/4/unlike" class="text-grey-dark hover:no-underline hover:text-red">
+                    <a class="text-grey-dark hover:no-underline hover:text-red">
                     <i class="fa fa-heart fa-lg mr-2"></i> 3
                   </a>
 
 
                 </span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
+                <div id="post-template" class="hidden flex bg-gray-100 mb-4 rounded-lg">
+                    <div class="w-1/8 text-right pl-3 pt-3">
+                        <div>
+                            <a href="#"><img src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif" alt="avatar" class="rounded-full h-12 w-12 mr-2"></a>
+                        </div>
+                    </div>
+
+                    <div class="w-7/8 p-3 pl-0">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-bold"><a href="#" class="text-black user-name"></a></span>
+                                <span class="text-grey-dark">·</span>
+                                <span class="text-grey-dark date"></span>
+                                <span class="inline-block">
+                                  <form class="delete-post-form">
+                                    <input type="hidden" value="8" name="postToDelete">
+                                    <button type="submit"><i class="transition duration-500 ease-in-out hover:bg-gray-300 transform p-5 rounded-full fa fa-trash"></i></button>
+                                  </form>
+
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="mb-4">
+                                <p class="mb-6 post-content"></p>
+                            </div>
+                            <div class="pb-2">
+                                <span class="mr-8"><a class="text-grey-dark hover:no-underline hover:text-blue-light"><i class="fa fa-comment fa-lg mr-2"></i><span class="comment-count">0</span></a></span>
+                                <span class="mr-8"><a  class="text-grey-dark hover:no-underline hover:text-green"><i class="fa fa-retweet fa-lg mr-2"></i><span class="repost-count">0</span></a></span>
+                                <span class="mr-8">
+                                    <a  class="text-grey-dark hover:no-underline hover:text-red">
+                                        <i class="fa fa-heart-o fa-lg mr-2"></i><span class="like-count">0</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
+
 
 
 
