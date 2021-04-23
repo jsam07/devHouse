@@ -21,9 +21,6 @@ const jwtStrategy: JwtStrategy = new JwtStrategy(
     },
     async (req, payload, done) => {
         try {
-            logger.debug('Inside jwt verification');
-            logger.debug(`Cookie expiration: `);
-
             const user = await UserService.findUserByEmail(payload.email);
 
             if (user) {

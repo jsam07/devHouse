@@ -43,7 +43,6 @@ export default class PostService {
                     postLikedFrom: true,
                 },
             });
-            logger.debug(posts);
             logger.info(`Returning all friend posts for email: ${email}`);
             return posts;
         } catch (error) {
@@ -54,7 +53,7 @@ export default class PostService {
 
     public static async deleteUserPostById(id: number): Promise<void> {
         try {
-            // Delete comments first, then likes
+            // Delete comments first
             await database.comment.deleteMany({ where: { postId: id } });
             await database.post.delete({ where: { id } });
             logger.info(`Post with id =${id} has been deleted.`);
@@ -162,6 +161,7 @@ export default class PostService {
                     },
                 },
             });
+            logger.info(`User ${email} liked post: ${postId}`);
         } catch (error) {
             logger.error(error);
             throw new DatabaseException('likeUserPost');
@@ -178,6 +178,7 @@ export default class PostService {
                     },
                 },
             });
+            logger.info(`User ${email} unliked post: ${postId}`);
         } catch (error) {
             logger.error(error);
             throw new DatabaseException('unlikeUserPost');
