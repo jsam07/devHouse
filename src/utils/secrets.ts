@@ -10,5 +10,7 @@ if (IOHandler.dirExists('.env')) {
     dotenv.config({ path: '.env.example' });
 }
 
+export const saltRounds = 10;
+export const { JWT_SECRET } = process.env;
 export const PORT = process.env.PORT || 3000;
 export const ENVIRONMENT = process.env.NODE_ENV || 'development';

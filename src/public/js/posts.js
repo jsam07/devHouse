@@ -11,5 +11,5 @@ const setup = () => {
 };
 
 $(function () {
-    console.log('ready!');
+
 });
