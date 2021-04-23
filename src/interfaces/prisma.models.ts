@@ -49,3 +49,13 @@ export type HashTag = {
     id: number;
     name: string;
 };
+
+/**
+ * Model Notification
+ */
+
+export type Notification = {
+    id: number;
+    message: string;
+    seen: boolean;
+};

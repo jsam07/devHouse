@@ -5,6 +5,7 @@ import { saltRounds } from '../utils/secrets';
 import { User } from '../interfaces/prisma.models';
 import PrismaDatabase from '../database/Prisma.database';
 import DatabaseException from '../exceptions/DatabaseException';
+import NotificationService from './Notification.service';
 
 const { database } = PrismaDatabase;
 
@@ -41,15 +42,14 @@ export default class UserService {
     public static async followUser(userToFollow: number, email: string): Promise<void> {
         try {
             await database.user.update({
-                where: {
-                    email,
-                },
-                data: {
-                    friends: {
-                        connect: [{ id: userToFollow }],
-                    },
-                },
+                where: { email },
+                data: { friends: { connect: [{ id: userToFollow }] } },
             });
+            const { firstName, lastName } = await database.user.findUnique({ where: { email } });
+            const notificationMsg = `✨ ${firstName} ${lastName} started following you.`;
+
+            await NotificationService.notifyUser(notificationMsg, userToFollow);
+
             logger.info(`User ${email} followed user: ${userToFollow}`);
         } catch (error) {
             logger.error(error);
@@ -69,6 +69,10 @@ export default class UserService {
                     },
                 },
             });
+            const { firstName, lastName } = await database.user.findUnique({ where: { email } });
+            const notificationMsg = `✨ ${firstName} ${lastName} unfollowed you.`;
+
+            await NotificationService.notifyUser(notificationMsg, userToUnfollow);
             logger.info(`User ${email} unfollowed user: ${userToUnfollow}`);
         } catch (error) {
             logger.error(error);
