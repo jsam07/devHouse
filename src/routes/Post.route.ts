@@ -17,6 +17,8 @@ export default class PostRoute implements IRoute {
 
     private initializeRoutes(): void {
         this.initializeGetRoute(`${this.path}`, PostController.handleGetAllPosts);
+        this.initializeGetRoute(this.getPath(':postId/like'), PostController.handleLikePost);
+        this.initializeGetRoute(this.getPath(':postId/unlike'), PostController.handleUnlikePost);
         this.initializeGetRoute(this.getPath(':id'), PostController.handleGetPostByID);
         this.initializePostRoute(this.getPath('delete'), PostController.handleDeletePost);
         this.initializePostRoute(this.getPath(':id/comment'), PostController.handleCreateComment);

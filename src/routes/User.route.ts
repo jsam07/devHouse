@@ -27,18 +27,6 @@ export default class UserRoute implements IRoute {
             passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
             UserController.handleUnfollowUser,
         );
-
-        this.router.get(
-            this.getPath(':postId/like'),
-            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
-            PostController.handleLikePost,
-        );
-
-        this.router.get(
-            this.getPath(':postId/unlike'),
-            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
-            PostController.handleUnlikePost,
-        );
     }
 
     private getPath(s: string): string {
