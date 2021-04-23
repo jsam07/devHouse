@@ -54,9 +54,9 @@ export default class PostService {
 
     public static async deleteUserPostById(id: number): Promise<void> {
         try {
-            await database.post.delete({
-                where: { id },
-            });
+            // Delete comments first, then likes
+            await database.comment.deleteMany({ where: { postId: id } });
+            await database.post.delete({ where: { id } });
             logger.info(`Post with id =${id} has been deleted.`);
         } catch (error) {
             logger.error(error);

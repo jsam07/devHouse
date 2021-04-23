@@ -22,7 +22,7 @@
 
   <script
           type="text/javascript"
-          src="js"
+          src="js/posts.js"
   ></script>
 
 </head>
@@ -234,13 +234,14 @@
                   class="w-12 h-12 rounded-full"
                   src="https://user-images.githubusercontent.com/76543451/103982284-0a6f0b00-5138-11eb-872b-0b9e70fc5c25.gif"
           />
-          <form class="w-full" action="/posts" method="POST" id="posts-form">
+          <form class="w-full" action="/posts" method="POST" id="posts-form" onSubmit="return validateForm()">
             <input
+                    id="post-content"
                     class="w-9/12 bg-gray-200 rounded-full px-3 py-2"
                     name="postText"
                     placeholder="What's on your mind?"
             />
-            <input class="transition duration-500 ease-in-out hover:bg-red-600 transform w-2/12 rounded-full p-2 bg-gray-800 cursor-pointer text-gray-200" type="submit" value="Post">
+            <input  class="transition duration-500 ease-in-out hover:bg-red-600 transform w-2/12 rounded-full p-2 bg-gray-800 cursor-pointer text-gray-200" type="submit" value="Post">
           </form>
         </div>
         <div></div>
@@ -402,19 +403,6 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
-  <script>
-    const setup = () => {
-      return {
-        loading: true,
-        isSidebarOpen: false,
-        toggleSidbarMenu() {
-          this.isSidebarOpen = !this.isSidebarOpen
-        },
-        isSettingsPanelOpen: false,
-        isSearchBoxOpen: false,
-      }
-    }
-  </script>
 </div>
 </body>
 </html>

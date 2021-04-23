@@ -10,6 +10,17 @@ const setup = () => {
     };
 };
 
-$(function () {
+const validateForm = (e) => {
+    e.preventDefault();
+    const postContent = document.getElementById('post-content').value;
+    console.log(postContent);
+    if(postContent.trim() === '') {
+        alert('Post cannot be empty');
+        return false;
+    }
+    return true;
+}
 
+$(function () {
+      $()
 });
