@@ -1,6 +1,5 @@
 import { Response, NextFunction } from 'express';
 
-import { logger } from '../utils/logger';
 import User from '../interfaces/user.interface';
 import { Post } from '../interfaces/prisma.models';
 import PostService from '../services/Post.service';
@@ -21,7 +20,6 @@ export default class PostController {
             const adminPosts: Post[] = await PostService.getAllPostsForUser(emailOfCurrentUser);
             const friendsPosts: Post[] = await PostService.getAllPostsFromFriends(emailOfCurrentUser);
             const posts = { adminPosts, friendsPosts, emailOfCurrentUser };
-            logger.debug(`Friends Posts: ${JSON.stringify(friendsPosts, null, 4)}`);
 
             return res.render('posts', { posts });
         } catch (error) {
