@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import passport from 'passport';
 import IRoute from '../interfaces/route.interface';
 import PostController from '../controllers/Post.controller';

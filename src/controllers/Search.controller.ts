@@ -1,9 +1,8 @@
 import { Response, NextFunction } from 'express';
-import RequestWithUser from '../interfaces/requestWithUser.interface';
+
 import UserService from '../services/User.service';
 import PostService from '../services/Post.service';
-import { Post, User } from '../interfaces/prisma.models';
-import { logger } from '../utils/logger';
+import RequestWithUser from '../interfaces/requestWithUser.interface';
 
 export default class SearchController {
     public static handleSearchForPostsAndUsers = async (
@@ -18,11 +17,9 @@ export default class SearchController {
                 const { email: emailOfCurrentUser } = req.user;
                 const keyword = req.query.query as string;
 
-                logger.debug(`Keyword(s): ${keyword}`);
                 const users = await UserService.findAllUsersLike(keyword);
                 const posts = await PostService.findAllPostsLike(keyword);
                 const searchResults = { users, posts, emailOfCurrentUser };
-                logger.debug(JSON.stringify(searchResults, null, 4));
 
                 res.render('search', { searchResults });
             }

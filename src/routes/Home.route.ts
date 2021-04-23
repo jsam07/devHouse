@@ -14,7 +14,6 @@ export default class HomeRoute implements IRoute {
     }
 
     private initializeRoutes() {
-        // TODO: Add middleware to re-route to signup/login if user is not authenticated
         this.router.get(`${this.path}`, HomeController.home);
         this.router.get(`${this.path}demo`, HomeController.demo);
     }

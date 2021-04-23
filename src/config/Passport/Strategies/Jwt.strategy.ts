@@ -1,10 +1,9 @@
 import { Strategy as JwtStrategy } from 'passport-jwt';
 
-import PassportStrategy from '../../../interfaces/passport.strategy.interface';
-import UserService from '../../../services/User.service';
-
-import User from '../../../interfaces/user.interface';
 import { logger } from '../../../utils/logger';
+import { JWT_SECRET } from '../../../utils/secrets';
+import UserService from '../../../services/User.service';
+import PassportStrategy from '../../../interfaces/passport.strategy.interface';
 
 const cookieJwtExtractor = req => {
     let token = null;
@@ -16,7 +15,7 @@ const cookieJwtExtractor = req => {
 
 const jwtStrategy: JwtStrategy = new JwtStrategy(
     {
-        secretOrKey: 'JWT_SECRET',
+        secretOrKey: JWT_SECRET,
         jwtFromRequest: cookieJwtExtractor,
         passReqToCallback: true,
     },
@@ -24,15 +23,11 @@ const jwtStrategy: JwtStrategy = new JwtStrategy(
         try {
             logger.debug('Inside jwt verification');
             logger.debug(`Cookie expiration: `);
-            // TODO: Check for password
+
             const user = await UserService.findUserByEmail(payload.email);
 
             if (user) {
-                logger.debug('Attaching user to req object from jwt');
-                req.user = {
-                    email: payload.email,
-                };
-                logger.debug(`From jwt, checking req.user = ${req.user}`);
+                req.user = { email: payload.email };
                 return done(undefined, user, payload);
             }
 

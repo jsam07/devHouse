@@ -1,10 +1,9 @@
 import { Strategy as GitHubStrategy } from 'passport-github2';
 
-import PassportStrategy from '../../../interfaces/passport.strategy.interface';
-import UserService from '../../../services/User.service';
-
-import User from '../../../interfaces/user.interface';
 import { logger } from '../../../utils/logger';
+import UserService from '../../../services/User.service';
+import { User } from '../../../interfaces/prisma.models';
+import PassportStrategy from '../../../interfaces/passport.strategy.interface';
 
 const githubStrategy: GitHubStrategy = new GitHubStrategy(
     {
@@ -13,12 +12,10 @@ const githubStrategy: GitHubStrategy = new GitHubStrategy(
         callbackURL: 'http://localhost:3000/auth/github/callback',
         passReqToCallback: true,
     },
-    (req, accessToken, refreshToken, profile, done) => {
+    async (req, accessToken, refreshToken, profile, done) => {
         // TODO: Fix this to call appropriate controller
         logger.debug('Got into verify function');
-        const user: User = {
-            email: 'gj@gmail.com',
-        };
+        const user: User = await UserService.createGitHubUser(profile.email);
         return user
             ? done(null, user)
             : done(null, false, {

@@ -1,10 +1,9 @@
 import passport from 'passport';
 
 import PassportStrategy from '../../interfaces/passport.strategy.interface';
-import { logger } from '../../utils/logger';
 
 export default class PassportConfig {
-    public readonly strategies: PassportStrategy[];
+    private readonly strategies: PassportStrategy[];
 
     constructor(strategies: PassportStrategy[]) {
         this.strategies = strategies;
