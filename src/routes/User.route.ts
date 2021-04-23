@@ -26,6 +26,12 @@ export default class UserRoute implements IRoute {
             passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
             UserController.handleUnfollowUser,
         );
+
+        this.router.get(
+            this.getPath('notifications'),
+            passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' }),
+            UserController.handleGetNotifications,
+        );
     }
 
     private getPath(s: string): string {

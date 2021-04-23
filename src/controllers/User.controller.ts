@@ -1,6 +1,7 @@
 import { Response, NextFunction } from 'express';
 import UserService from '../services/User.service';
 import RequestWithUser from '../interfaces/requestWithUser.interface';
+import NotificationService from '../services/Notification.service';
 
 export default class UserController {
     public static handleFollowUser = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
@@ -14,6 +15,25 @@ export default class UserController {
                 await UserService.followUser(parseInt(userToFollow, 10), email);
 
                 res.redirect('back');
+            }
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    public static handleGetNotifications = async (
+        req: RequestWithUser,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> => {
+        try {
+            if (!req.user) {
+                res.redirect('/auth/login');
+            } else {
+                const { email } = req.user;
+
+                const notifications = await NotificationService.getUserNotifications(email);
+                res.render('notifications', { notifications });
             }
         } catch (error) {
             next(error);

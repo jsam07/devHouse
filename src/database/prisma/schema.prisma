@@ -11,24 +11,24 @@ generator client {
 }
 
 model Post {
-  id              Int       @id @default(autoincrement()) 
+  id              Int       @id @default(autoincrement())
   title           String?   @db.VarChar(255)
-  content         String?   @db.Text 
+  content         String?   @db.Text
 
   author          User      @relation(fields: [authorId], references: [id])
   authorId        Int
 
   parentPostId    Int?
   parentPost      Post?     @relation("PostRepost", fields: [parentPostId], references: [id])
-  reposts         Post[]    @relation("PostRepost")      
+  reposts         Post[]    @relation("PostRepost")
 
   hashTags        HashTag[]
-  comments        Comment[] 
+  comments        Comment[]
 
   postLikedFrom User[]    @relation(name: "likedPosts")
-  
+
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt   
+  updatedAt     DateTime? @updatedAt
 }
 
 model User {
@@ -41,14 +41,15 @@ model User {
   lastName        String?   @db.VarChar(255)
   firstName       String?   @db.VarChar(255)
   hashedPassword  String?   @db.VarChar(255)
-  
-  posts           Post[]    
+
+  posts           Post[]
   likedPosts      Post[]    @relation(name: "likedPosts")
   friends         User[]    @relation("UserFollows", references: [id])
   followers       User[]    @relation("UserFollows", references: [id])
 
   comments        Comment[]
   commentLikes    Comment[] @relation(name: "commentLikes")
+  notifications   Notification[]
 
 }
 
@@ -60,19 +61,27 @@ model Comment {
   authorId          Int
   likesFrom         User[]    @relation(name: "commentLikes")
 
-  post              Post      @relation(fields: [postId], references: [id]) 
+  post              Post      @relation(fields: [postId], references: [id])
   postId            Int
 
   parentCommentId   Int?
   parentComment     Comment?  @relation("ReplyComments", fields: [parentCommentId], references: [id])
-  replies           Comment[] @relation("ReplyComments")   
-  
+  replies           Comment[] @relation("ReplyComments")
+
   createdAt         DateTime  @default(now())
-  updatedAt         DateTime? @updatedAt 
+  updatedAt         DateTime? @updatedAt
 }
 
 model HashTag {
   id    Int     @id @default(autoincrement())
   name  String  @db.VarChar(255) @unique
   posts Post[]
+}
+
+model Notification {
+  id       Int     @id @default(autoincrement())
+  message  String  @db.VarChar(255)
+  seen     Boolean @default(false)
+  user     User    @relation(fields: [userId], references: [id])
+  userId   Int
 }
