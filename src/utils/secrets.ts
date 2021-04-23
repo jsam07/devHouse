@@ -11,5 +11,4 @@ if (IOHandler.dirExists('.env')) {
 }
 
 export const PORT = process.env.PORT || 3000;
-export const { SESSION_SECRET } = process.env;
 export const ENVIRONMENT = process.env.NODE_ENV || 'development';

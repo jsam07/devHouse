@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,6 +19,7 @@
           type="text/javascript"
           src="https://code.jquery.com/jquery-2.1.1.min.js"
   ></script>
+
 </head>
 <body class="bg-grey-light font-sans">
 <div
@@ -297,13 +298,24 @@
                   ></span
                 >
                 <span class="mr-8"
-                ><a
-                          href="#"
-                          class="text-grey-dark hover:no-underline hover:text-red"
-                  ><i class="fa fa-heart fa-lg mr-2"></i> <%= post.postLikedFrom.length
-                    %></a
-                  ></span
                 >
+                  <% if((post.postLikedFrom.some(user => user.email === posts.emailOfCurrentUser))){ %>
+                    <a
+                            href="/posts/<%= post.id %>/unlike"
+                            class="text-grey-dark hover:no-underline hover:text-red"
+                    >
+                    <i class="fa fa-heart fa-lg mr-2"></i> <%= post.postLikedFrom.length %>
+                  </a>
+                  <% } else{ %>
+                    <a
+                            href="/posts/<%= post.id %>/like"
+                            class="text-grey-dark hover:no-underline hover:text-red"
+                    >
+                    <i class="fa fa-heart-o fa-lg mr-2"></i> <%= post.postLikedFrom.length %>
+                  </a>
+                  <% } %>
+
+                </span>
               </div>
             </div>
           </div>
@@ -358,14 +370,25 @@
                       post.reposts.length %></a
                   ></span
                 >
-                <span class="mr-8">
-                  <a
-                          href="/user/<%= post.id %>/like"
-                          class="text-grey-dark hover:no-underline hover:text-red">
+                <span class="mr-8"
+                >
+                  <% if((post.postLikedFrom.some(user => user.email === posts.emailOfCurrentUser))){ %>
+                    <a
+                            href="/posts/<%= post.id %>/unlike"
+                            class="text-grey-dark hover:no-underline hover:text-red"
+                    >
+                    <i class="fa fa-heart fa-lg mr-2"></i> <%= post.postLikedFrom.length %>
+                  </a>
+                  <% } else{ %>
+                    <a
+                            href="/posts/<%= post.id %>/like"
+                            class="text-grey-dark hover:no-underline hover:text-red"
+                    >
                     <i class="fa fa-heart-o fa-lg mr-2"></i> <%= post.postLikedFrom.length %>
                   </a>
-                </span
-                >
+                  <% } %>
+
+                </span>
               </div>
             </div>
           </div>

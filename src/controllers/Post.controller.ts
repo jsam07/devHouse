@@ -22,11 +22,11 @@ export default class PostController {
             if (!req.user) {
                 return res.redirect('/auth/login');
             }
-            const { email }: User = req.user;
+            const { email: emailOfCurrentUser }: User = req.user;
 
-            const adminPosts: Post[] = await PostService.getAllPostsForUser(email);
-            const friendsPosts: Post[] = await PostService.getAllPostsFromFriends(email);
-            const posts = { adminPosts, friendsPosts };
+            const adminPosts: Post[] = await PostService.getAllPostsForUser(emailOfCurrentUser);
+            const friendsPosts: Post[] = await PostService.getAllPostsFromFriends(emailOfCurrentUser);
+            const posts = { adminPosts, friendsPosts, emailOfCurrentUser };
             logger.debug(`Friends Posts: ${JSON.stringify(friendsPosts, null, 4)}`);
 
             return res.render('posts', { posts });
@@ -121,9 +121,10 @@ export default class PostController {
                 res.redirect('/auth/login');
             } else {
                 const { email } = req.user;
-                const { id: postId } = req.params;
+                const { postId } = req.params;
 
                 await PostService.likeUserPost(parseInt(postId, 10), email);
+                res.redirect('/posts');
             }
         } catch (error) {
             next(error);
@@ -136,9 +137,10 @@ export default class PostController {
                 res.redirect('/auth/login');
             } else {
                 const { email } = req.user;
-                const { id: postId } = req.params;
+                const { postId } = req.params;
 
                 await PostService.unlikeUserPost(parseInt(postId, 10), email);
+                res.redirect('/posts');
             }
         } catch (error) {
             next(error);

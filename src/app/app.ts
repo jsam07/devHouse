@@ -18,7 +18,6 @@ export default class App {
         this._env = ENVIRONMENT;
         this._app = express();
 
-        // this.initializeDatabaseConnection();
         this.initializeMiddleware();
         this.initializeRoutes(routes);
         this.initializeErrorHandling();
@@ -33,14 +32,10 @@ export default class App {
     }
 
     public listen(): void {
-        this._app.listen(process.env.PORT || 3000, () => {
+        this._app.listen(this._port, () => {
             logger.info(`🚀 Application Started; Listening on port: ${this._port}`);
         });
     }
-
-    // private initializeDatabaseConnection() {
-    //   // TODO
-    // }
 
     private initializeMiddleware(): void {
         logger.info('🔨 Initializing Middleware ...');
