@@ -113,4 +113,17 @@ export default class UserService {
             throw new DatabaseException('findUserByEmail');
         }
     }
+
+    public static async createGitHubUser(email: string): Promise<User> {
+        try {
+            const user: User = await database.user.create({
+                data: { email },
+            });
+            logger.info(`Created user with email: ${email}`);
+            return user;
+        } catch (error) {
+            logger.error(error);
+            throw new DatabaseException('createGitHubUser');
+        }
+    }
 }

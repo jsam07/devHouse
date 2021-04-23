@@ -6,7 +6,7 @@ import SearchController from '../controllers/Search.controller';
 export default class SearchRoute implements IRoute {
     public readonly path: string;
 
-    public router: Router;
+    public readonly router: Router;
 
     constructor() {
         this.path = '/search';

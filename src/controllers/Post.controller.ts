@@ -1,18 +1,12 @@
 import { Response, NextFunction } from 'express';
-import RequestWithUser from '../interfaces/requestWithUser.interface';
-import PostService from '../services/Post.service';
+
+import { logger } from '../utils/logger';
 import User from '../interfaces/user.interface';
 import { Post } from '../interfaces/prisma.models';
-import { logger } from '../utils/logger';
-import UserService from '../services/User.service';
+import PostService from '../services/Post.service';
+import RequestWithUser from '../interfaces/requestWithUser.interface';
 
 export default class PostController {
-    private postService: PostService;
-
-    constructor() {
-        this.postService = new PostService();
-    }
-
     public static handleGetAllPosts = async (
         req: RequestWithUser,
         res: Response,
@@ -58,13 +52,8 @@ export default class PostController {
             if (!req.user) {
                 res.redirect('/auth/login');
             } else {
-                const { email }: User = req.user;
                 const { postToDelete: postId } = req.body;
-
                 await PostService.deleteUserPostById(parseInt(postId, 10));
-                // const posts: Post[] = await PostService.getAllPostsForUser(email);
-
-                // res.render('posts', { posts });
                 res.redirect('/posts');
             }
         } catch (error) {
@@ -86,9 +75,8 @@ export default class PostController {
                 const { id: postId } = req.params;
 
                 await PostService.createComment(parseInt(postId, 10), commentText, email);
-                const post: Post = await PostService.getPostByID(parseInt(postId, 10));
 
-                res.render('post', { post });
+                res.redirect('/posts');
             }
         } catch (error) {
             next(error);
@@ -104,9 +92,6 @@ export default class PostController {
                 const { postText } = req.body;
 
                 await PostService.createPost(postText, email);
-                // const posts: Post[] = await PostService.getAllPostsForUser(email);
-                //
-                // return res.render('posts', { posts });
 
                 res.redirect('/posts');
             }

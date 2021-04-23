@@ -2,12 +2,11 @@ import { Router } from 'express';
 import passport from 'passport';
 import IRoute from '../interfaces/route.interface';
 import UserController from '../controllers/User.controller';
-import PostController from '../controllers/Post.controller';
 
 export default class UserRoute implements IRoute {
     public readonly path: string;
 
-    public router: Router;
+    public readonly router: Router;
 
     constructor() {
         this.path = '/user';

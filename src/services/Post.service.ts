@@ -1,6 +1,6 @@
-import PrismaDatabase from '../database/Prisma.database';
 import { logger } from '../utils/logger';
 import { Post } from '../interfaces/prisma.models';
+import PrismaDatabase from '../database/Prisma.database';
 import DatabaseException from '../exceptions/DatabaseException';
 
 const { database } = PrismaDatabase;

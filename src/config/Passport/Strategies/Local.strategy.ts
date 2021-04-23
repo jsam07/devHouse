@@ -1,6 +1,5 @@
 import { Strategy as LocalStrategy } from 'passport-local';
 
-import { logger } from '../../../utils/logger';
 import UserService from '../../../services/User.service';
 import AuthenticationService from '../../../services/Auth.service';
 import DoneFunction from '../../../interfaces/done.function.interface';
@@ -29,12 +28,8 @@ const localStrategy: LocalStrategy = new LocalStrategy(
                 return done(new IncorrectCredentialsException());
             }
 
-            logger.debug('Returning USER');
-            logger.debug('Attaching user to req object from local');
-
             req.user = { email: user.email };
 
-            logger.debug(`From local, checking req.user = ${JSON.stringify(req.user)}`);
             return done(null, user, { message: 'Logged in Successfully' });
         } catch (error) {
             return done(error);
