@@ -86,7 +86,7 @@
     "passport-github2": "^0.1.12",
     "passport-jwt": "^4.0.0",
     "passport-local": "1.0.0",
-    "postcss": "^8.2.10",
+    "postcss": "^8.2.13",
     "prettier": "^2.2.1",
     "prisma": "^2.21.2",
     "randomstring": "^1.1.5",
