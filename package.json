@@ -9,7 +9,7 @@
   "scripts": {
     "build-tailwind": "npx tailwindcss-cli@latest build ./src/public/css/tailwind.css -o ./dist/public/css/tailwind.css",
     "build-ts": "tsc",
-    "build": "npm run build-tailwind && npm run build-ts && npm run lint && npm run copy-static-assets",
+    "build": "npm run build-tailwind && npm run build-ts && npm run lint && npm run copy-static-assets && npm run prisma:generate",
     "copy-static-assets": "ts-node script.ts",
     "debug": "npm run build && npm run watch-debug",
     "dev2": "cross-env NODE_ENV=development nodemon",
