@@ -1,64 +1,108 @@
 # Dev-House
 
-📱 This repository houses the frontend for BagIt. BagIt a mobile application that improves the grocery shopping experience, by allowing users to easily create and share shopping lists.
+Dev House is a twitter-like social networking platform for developers. Registered users can post, like, comment, and share posts with people in their network.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/jsam07/bag-it/main/Assets/hero.svg" alt="Hero" height="600"/>
-</p>
-
-## Architecture
-The BagIt backend is shown below (highlighted in red). The frontend is built using .NET MAUI Blazor.
-<p align="center">
-    <img alt="Search" src="https://raw.githubusercontent.com/jsam07/bag-it/main/Assets/frontend.svg" width="100%"/>
+    <img src="https://raw.githubusercontent.com/jsam07/devHouse/main/assets/img/dev.jpg" alt="Hero" height="600"/>
 </p>
 
 
 ### Built With
 
--   ![.NET Maui](https://img.shields.io/badge/-_Maui-050B1E?&logo=dotnet)
--   ![C#](https://img.shields.io/badge/-csharp-050B1E?&logo=csharp)
+-   ![Node.js](https://img.shields.io/badge/-Node.js-050B1E?&logo=node.js)
+-   ![TypeScript](https://img.shields.io/badge/-TypeScript-050B1E?&logo=TypeScript)
+-   ![Prisma](https://img.shields.io/badge/-Prisma-050B1E?&logo=Prisma)
+-   ![TailwindCSS](https://img.shields.io/badge/-Tailwind_CSS-050B1E?&logo=TailwindCSS)
+-   ![Passport](https://img.shields.io/badge/-Passport-050B1E?&logo=Passport)
+-   ![Express](https://img.shields.io/badge/-Express-050B1E?&logo=Express)
+-   ![ESLint](https://img.shields.io/badge/-ESLint-050B1E?&logo=eslint)
+-   ![Prettier](https://img.shields.io/badge/-Prettier-050B1E?&logo=prettier)
+<!-- GETTING STARTED -->
 
 ## Getting Started
 
-### 1. Clone Project
+### 1. Download starter
 
 Clone this repository:
+
 ```
-git clone git@github.com:jsam07/bag-it.git
+git clone git@github.com:jsam07/devHouse.git
 ```
 
-### 2. Open in Visual Studio Preview 2022
+### 2. Load Environment Variables
+Before building, be sure to add a `.env` file with the follow shape to the root of the project:
 
-In order to run the MAUI application locally, you'll need to install **the latest version of** Visual Studio Preview 2022 (.NET MAUI Preview 14) with the following workloads:
-  - Mobile development with .NET
-  - Universal Windows Platform development
-  - Desktop development with C++
-  - .NET Desktop Development
-  - NET and web development (required for Blazor Desktop and the BlazorWebView control)
+```sh
+# Private JWT key
+JWT_SECRET="2983e53f-a9da-47c6-bb8b-274d849ccc10"
 
-*Note*: this is important since .NET MAUI is still in preview, breaking changes could occur if this is not done.
+# URL to connect to Database (SQLite by default)
+DATABASE_URL = "file:../db/dh.db"
 
-Once VS Preview is configured, you can run the app in `Debug mode`, using either one of the  pre-installed `Android Emulators` or `Windows Machine` option. See below.
-<p align="center">
-    <img alt="Search" src="https://raw.githubusercontent.com/jsam07/bag-it/main/Assets/menu.png" width="100%"/>
-</p>
+# GitHub Credentials for Passport (Optional)
+GITHUB_CLIENT_ID="8af5555555555"
 
-Alternatively, you can do **one** of the following:
-1. Build the release version of BagIt via the command: `dotnet publish -f:net6.0-android -c:Release -o Publish`
-    - The signed apk can then be found in `Publish/com.companyname.bagit-Signed.apk`
-2.  You can download the pre-built apk [here](https://github.com/jsam07/bag-it/raw/main/Assets/com.companyname.bagit-Signed.apk)
+GITHUB_CLIENT_SECRET="d0aa222222222"
 
-### 3. Testing BagIt
+GITHUB_ADMIN_ID="00000000"
 
-To test the application, you can either register as a new user or use the following credentials to login:
+GITHUB_ADMIN_NAME="John Doe"
 
-```text
-Email: "js@gmail.com"
-Password: "123456"
 ```
+
+### 3. Install Dependencies & Build
+Install npm dependencies:
+
+```
+cd devHouse
+npm install
+```
+
+Start server:
+```
+npm run start
+```
+
+The deveopment server should now be running on http://localhost:3000.
+
+<!-- USAGE EXAMPLES -->
+
+## Usage
+
+--
+
+<!-- ROADMAP -->
+
+## Roadmap
+
+<!-- -   [x] Add Changelog -->
+
+--
+
+
+<!-- TESTING -->
+
+<!-- ## TESTING -->
+
+<!-- LINTING -->
+
+<!-- ## Linting -->
+
+<!-- LICENSE -->
+
+<!-- ## License
+
+[GPL-3.0](LICENSE.md) © Runik
+-->
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+--
 
 ## Status
 
 <p align="center">
-    <img alt="Search" src="https://repobeats.axiom.co/api/embed/707a35c3d8b9d2de160e8755549f26e0771b0ec5.svg" width="100%"/>
+    <img alt="Search" src="https://repobeats.axiom.co/api/embed/12d965ac271db0f4b02afe99ace3c99ba3b2846d.svg" width="100%"/>
 </p>
