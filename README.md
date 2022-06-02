@@ -39,7 +39,7 @@ JWT_SECRET="67536t567g-d6f3-67r3-bb7t-675d849ccc10"
 # URL to connect to Database (SQLite by default)
 DATABASE_URL = "file:../db/dh.db"
 
-# GitHub Credentials for Passport (Optional)
+# GitHub Credentials for Passport
 GITHUB_CLIENT_ID="8af5555555555"
 
 GITHUB_CLIENT_SECRET="d0aa222222222"
