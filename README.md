@@ -3,7 +3,7 @@
 Dev House is a twitter-like social networking platform for developers. Registered users can post, like, comment, and share posts with people in their network.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/jsam07/devHouse/main/assets/img/dev.jpg" alt="Hero" height="600"/>
+    <img src="https://raw.githubusercontent.com/jsam07/devHouse/main/assets/img/dev.jpg" alt="Hero" height="80%"/>
 </p>
 
 
