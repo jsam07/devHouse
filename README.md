@@ -34,7 +34,7 @@ Before building, be sure to add a `.env` file with the follow shape to the root 
 
 ```sh
 # Private JWT key
-JWT_SECRET="2983e53f-a9da-47c6-bb8b-274d849ccc10"
+JWT_SECRET="67536t567g-d6f3-67r3-bb7t-675d849ccc10"
 
 # URL to connect to Database (SQLite by default)
 DATABASE_URL = "file:../db/dh.db"
