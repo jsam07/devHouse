@@ -1,6 +1,5 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 import _ from 'lodash';
-import bcrypt from 'bcrypt';
 
 import { logger } from '../utils/logger';
 import PrismaDatabase from './Prisma.database';

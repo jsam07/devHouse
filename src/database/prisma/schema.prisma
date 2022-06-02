@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -12,8 +12,8 @@ generator client {
 
 model Post {
   id              Int       @id @default(autoincrement())
-  title           String?   @db.VarChar(255)
-  content         String?   @db.Text
+  title           String?  
+  content         String?
 
   author          User      @relation(fields: [authorId], references: [id])
   authorId        Int
@@ -33,14 +33,14 @@ model Post {
 
 model User {
   id              Int       @id @default(autoincrement())
-  email           String    @db.VarChar(255) @unique
+  email           String    @unique
   provider        Int       @default(1)
 
-  imageUrl        String?   @db.Text
-  userName        String?   @db.VarChar(255)
-  lastName        String?   @db.VarChar(255)
-  firstName       String?   @db.VarChar(255)
-  hashedPassword  String?   @db.VarChar(255)
+  imageUrl        String?   
+  userName        String?   
+  lastName        String?   
+  firstName       String?  
+  hashedPassword  String?   
 
   posts           Post[]
   likedPosts      Post[]    @relation(name: "likedPosts")
@@ -55,7 +55,7 @@ model User {
 
 model Comment {
   id                Int       @id @default(autoincrement())
-  content           String    @db.Text
+  content           String    
 
   author            User      @relation(fields: [authorId], references: [id])
   authorId          Int
@@ -74,13 +74,13 @@ model Comment {
 
 model HashTag {
   id    Int     @id @default(autoincrement())
-  name  String  @db.VarChar(255) @unique
+  name  String  @unique
   posts Post[]
 }
 
 model Notification {
   id       Int     @id @default(autoincrement())
-  message  String  @db.VarChar(255)
+  message  String  
   seen     Boolean @default(false)
   user     User    @relation(fields: [userId], references: [id])
   userId   Int

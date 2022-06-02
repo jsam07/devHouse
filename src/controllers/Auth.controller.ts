@@ -68,24 +68,20 @@ export default class AuthenticationController {
     };
 
     public static handlePostLogin = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
-        passport.authenticate(
-            'local',
-            { session: false },
-            async (err, user, info): Promise<void> => {
-                try {
-                    if (err) return res.render('login', { error: err.message });
+        passport.authenticate('local', { session: false }, async (err, user, info): Promise<void> => {
+            try {
+                if (err) return res.render('login', { error: err.message });
 
-                    const { email } = req.body;
-                    const token = AuthenticationController.generateJwt(email);
-                    res.cookie('token', token, COOKIE_OPTS);
+                const { email } = req.body;
+                const token = AuthenticationController.generateJwt(email);
+                res.cookie('token', token, COOKIE_OPTS);
 
-                    return res.redirect('/posts');
-                } catch (error) {
-                    logger.error(error);
-                    return next(error);
-                }
-            },
-        )(req, res, next);
+                return res.redirect('/posts');
+            } catch (error) {
+                logger.error(error);
+                return next(error);
+            }
+        })(req, res, next);
     };
 
     private static generateJwt(email: string): string {
